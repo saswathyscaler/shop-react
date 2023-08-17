@@ -15,7 +15,7 @@ const Navbar = () => {
     <nav className="bg-blue-500 p-4 flex justify-between items-center">
     <div className="flex items-center">
     
-      <img src={logo} alt="logo" className='w-16' />
+      <img src={logo} alt="logo" className='w-16' onClick={()=>navigate('/')} />
       </div>
 
       <div className="flex items-center bg-white rounded-lg shadow-md px-2 py-1">
