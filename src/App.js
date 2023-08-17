@@ -8,8 +8,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import NotFound from "./components/NotFound";
 import Home from "./components/Home";
-import ProductDetails from "./components/ProductDetails";
 import UserDetails from "./widgets/UserDetails";
+import ProductDetails from "./widgets/ProductDetails";
 function App() {
   return (
     <Router>
