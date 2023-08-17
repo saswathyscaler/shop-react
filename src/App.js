@@ -2,11 +2,16 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import NotFound from "./components/NotFound";
+import Home from "./components/Home";
 function App() {
   return (
     <Router>
       <Navbar />
-      {/* Add the Router component here */}
       <>
         <Routes>
           <Route exact path="/" element={<Home />} />
