@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import ProductCard from './ProductCard';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -17,15 +19,10 @@ const Home = () => {
   return (
     <div className="grid grid-cols-4 gap-4 p-4">
       {products.map(product => (
-        <div key={product.id} className="bg-white p-4 shadow-md">
-        <div>
-        <img src= {product.image} alt="" />
-       
-        </div>
-          <h3 className="text-lg font-semibold">{product.name}</h3>
-          <p className="text-gray-600">{product.description}</p>
-          <div className="mt-2 text-blue-500">Price: ₹ {product.price}</div>
-        </div>
+      
+        <Link key={product.id} to={`/product/${product.id}`}>
+        <ProductCard product={product}/>
+      </Link>
       ))}
     </div>
   );

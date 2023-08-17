@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import reg from "../assets/reg1.jpg";
 
 
 
@@ -139,15 +138,13 @@ const Register = () => {
   return (
     <>
     <div className="bg-gray-700 flex justify-center items-center min-h-screen">
-  <div className="bg-gray-100 p-3 border rounded-xl shadow-xl max-w-3xl w-full sm:w-11/12 md:w-9/12 lg:w-8/12">
+      <div className="bg-gray-100 p-3 border rounded-xl shadow-xl max-w-md w-full sm:w-10/12 md:w-8/12 lg:w-6/12">
     <h2 className="text-3xl text-blue-700 font-bold text-center">
       Register Yourself
     </h2>
     <div className="flex flex-col md:flex-row">
-      <div className="w-full md:w-2/3 p-5">
-        <img src={reg} alt="register.png" className="rounded-2xl" />
-      </div>
-      <div className="w-full md:w-2/3 px-5 mt-5">
+    
+      <div className="w-full px-5 mt-5">
         <form className="flex flex-col gap-1">
           <label htmlFor="name" className="ml-2">
             Name
@@ -177,9 +174,10 @@ const Register = () => {
             type="password"
             className="p-2 border rounded-lg"
             name="password"
-            placeholder="Enter your password"
+            placeholder="at least 6 character"
             onChange={handelChange}
           />
+          <p className="text-xs mb-2">  <i>!</i>  Passwords must be at least 6 characters. and there should one uppercase one numeric and a special character</p>
 
           <label htmlFor="cpassword" className="ml-2">
             Confirm Password
@@ -191,7 +189,7 @@ const Register = () => {
             placeholder="Confirm your password"
             onChange={handelChange}
           />
-
+    
           <button
             onClick={register}
             className="bg-[#074FB2] text-white py-2 rounded-lg mt-3 hover:bg-blue-600"

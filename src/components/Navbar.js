@@ -3,9 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import logo from '../assets/logo.png'
+import { useNavigate } from 'react-router-dom';
 
 
 const Navbar = () => {
+  const navigate = useNavigate()
+
+
+
   return (
     <nav className="bg-blue-500 p-4 flex justify-between items-center">
     <div className="flex items-center">
@@ -29,7 +34,7 @@ const Navbar = () => {
           <FontAwesomeIcon icon={faShoppingCart} className="text-white text-lg cursor-pointer" />
           <span className="absolute top-0 left-2 bg-red-500 rounded-full text-white px-1 text-xs">3+</span>
         </div>
-        <div className="text-white text-sm cursor-pointer">Login</div>
+        <button onClick={()=>navigate('/login')} className="text-white text-sm cursor-pointer">Login</button>
       </div>
     </nav>
   );
