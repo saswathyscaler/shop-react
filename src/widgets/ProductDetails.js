@@ -28,7 +28,7 @@ const ProductDetails = () => {
 
   return (
     <div>
-      <div className="p-2">
+      <div className="p-2 min-h-screen">
         <div className="flex flex-col md:flex-row m-5">
           <div className="w-full md:w-1/2 pr-6 mb-4 md:mb-0">
             <img
@@ -102,12 +102,7 @@ const ProductDetails = () => {
             </div>
           </div>
         </div>
-        <button
-          onClick={() => navigate("/")}
-          className="bg-blue-300 p-2 md:p-4 border rounded-md ml-5 mb-3 block"
-        >
-          Back to home
-        </button>
+       
       </div>
     </div>
   );
