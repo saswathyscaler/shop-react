@@ -17,8 +17,8 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="grid grid-cols-4 gap-4 p-4">
-      {products.map(product => (
+    <div className="grid lg:grid-cols-4 w-[98%] ml-2 md:grid-cols-2 sm:grid-cols-1 gap-4">
+    {products.map(product => (
         <Link key={product.id} to={`/product/${product.id}`}>
           <ProductCard product={product} />
         </Link>
