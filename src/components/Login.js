@@ -113,8 +113,8 @@ const Login = () => {
 
   return (
     <>
-      <div className="bg-gray-400 flex justify-center items-center min-h-screen ">
-        <div className="bg-gray-50 p-3 border rounded-xl shadow-xl max-w-3xl w-full sm:w-11/12 md:w-9/12 lg:w-8/12">
+    <div className="bg-gray-700 flex justify-center items-center min-h-screen">
+    <div className="bg-gray-100 p-3 border rounded-xl shadow-xl max-w-md w-full sm:w-10/12 md:w-8/12 lg:w-6/12"> 
           <h1 className="text-3xl text-blue-700 font-bold text-center">
             Login Here
           </h1>

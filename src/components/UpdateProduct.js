@@ -72,8 +72,8 @@ const AddProduct = () => {
           navigate('/');
         }
       } catch (error) {
-        console.error('Error occurred while adding the product', error);
-        toast.error('An error occurred while adding the product');
+        console.error('Error occurred while updating the product', error);
+        toast.error('An error occurred while updating the product');
           navigate('/');
 
       }

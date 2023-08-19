@@ -17,6 +17,8 @@ const Navbar = () => {
     
       <img src={logo} alt="logo" className='w-16' onClick={()=>navigate('/')} />
       </div>
+      <button onClick={()=>navigate('/dashboard')}>All</button>
+      <button onClick={()=>navigate('/addproduct')}>Add</button>
 
       <div className="flex items-center bg-white rounded-lg shadow-md px-2 py-1">
         <input
