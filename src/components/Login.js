@@ -59,10 +59,11 @@ const Login = () => {
     });
     let data = await response.json();
     console.log(data);
-    const { msg, token, userId } = data;
+    const { message, token, userId } = data;
     console.log("token :", token);
-    console.log(msg);
-    if (msg === "invalid credentials") {
+    console.log("message :", message);
+
+    if (message === "invalid credentials") {
       toast.error("invalid credentials", {
         position: "top-right",
         autoClose: 3000,
@@ -99,9 +100,11 @@ const Login = () => {
       });
 
       localStorage.setItem("token", token);
-      localStorage.setItem("userId", userId);
+      localStorage.setItem("message", message);
       console.log("logged in successfully");
       navigate("/");
+      window.location.reload();
+
     }
   };
 
