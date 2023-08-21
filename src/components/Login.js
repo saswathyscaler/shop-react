@@ -59,7 +59,7 @@ const Login = () => {
     });
     let data = await response.json();
     console.log(data);
-    const { message, token, userId } = data;
+    const { message, token } = data;
     console.log("token :", token);
     console.log("message :", message);
 

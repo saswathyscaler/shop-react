@@ -98,9 +98,10 @@ const Register = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, password, password_confirmation }),
     });
-
+    
     const data = await response.json();
     console.log("data", data);
+    const { message, token } = data;
     if (response.status >= 400 || !data) {
       toast.error("some error occur", {
         position: "top-right",
@@ -124,6 +125,7 @@ const Register = () => {
         progress: undefined,
         theme: "colored",
       });
+      localStorage.setItem("token", token);
       nav("/");
     }
   };
@@ -171,12 +173,12 @@ const Register = () => {
                   type="password"
                   className="p-2 border rounded-lg"
                   name="password"
-                  placeholder="at least 6 character"
+                  placeholder="at least 8 character"
                   onChange={handelChange}
                 />
                 <p className="text-xs mb-2">
                   {" "}
-                  <i>!</i> Passwords must be at least 6 characters. and there
+                  <i>!</i> Passwords must be at least   8 characters. and there
                   should one uppercase one numeric and a special character
                 </p>
 

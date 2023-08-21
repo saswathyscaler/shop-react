@@ -1,22 +1,37 @@
-// import React from 'react';
-// import { Route, Navigate } from 'react-router-dom';
+import React from "react";
+import { Outlet, Navigate } from "react-router-dom";
 
-// const PrivateRoute = ({ element, condition, redirectTo, ...rest }) => {
-//   return condition ? element : <Navigate to={redirectTo} />;
-// };
+const PrivateRoutes = ({ children, ...rest }) => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    return <Outlet />;
+  } else {
+    return <Navigate to="/login" />;
+  }
+};
+
+export default PrivateRoutes;
+
+
+
+
+
+
+
 
 // export default PrivateRoute;
 // <PrivateRoute
 // exact
 // path="/edit/:id"
 // element={<UpdateProduct />}
-// condition={isAdmin} 
-// redirectTo="/" 
+// condition={isAdmin}
+// redirectTo="/"
 // />
 // <PrivateRoute
 // exact
 // path="/dashboard"
 // element={<Dashboard />}
-// condition={isAdmin} 
-// redirectTo="/" 
-// /> 
+// condition={isAdmin}
+// redirectTo="/"
+// />

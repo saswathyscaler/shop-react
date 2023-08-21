@@ -12,6 +12,8 @@ import UserDetails from "./widgets/UserDetails";
 import ProductDetails from "./widgets/ProductDetails";
 import AddProduct from "./components/AddProduct";
 import Dashboard from "./components/Dashboard";
+import PrivateRoutes from "./components/PrivateRoute";
+import AdminRoutes from "./components/AdminRoutes";
 function App() {
   return (
     <Router>
@@ -23,11 +25,14 @@ function App() {
           <Route exact path="/register" element={<Register />} />
           <Route path="/product/:productId" element={<ProductDetails />} />
           <Route path="*" element={<NotFound />} />
-          
-          <Route exact path="/addproduct" element={<AddProduct/>} />
 
-          <Route exact path="/userdetail" element={<UserDetails />} />
-          <Route exact path="/dashboard" element={<Dashboard />} />
+          <Route element={<PrivateRoutes />}>
+            <Route element={<UserDetails />} path="/userdetail" exact></Route>
+          </Route>
+          <Route element={<AdminRoutes />}>
+            <Route element={<Dashboard />} path="/dashboard" exact></Route>
+            <Route exact path="/addproduct" element={<AddProduct />} />
+          </Route>
         </Routes>
         <Footer />
 
