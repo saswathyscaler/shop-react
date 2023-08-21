@@ -64,7 +64,7 @@ const Filterbar = ({ onFilter }) => {
         <div onClick={() => handleCategoryClick("Pants")}>
           <img src={pant} className="w-20" alt="pants" />
           <br/>
-          <span className=" text-black px-2 py-1 rounded">Electronics</span>
+          <span className=" text-black px-2 py-1 rounded">Trousers</span>
 
         </div>
 
@@ -94,10 +94,7 @@ const Filterbar = ({ onFilter }) => {
           />
         </div>
       </div>
-      <div>
-        {products &&
-          products.map((product) => <div key={product.id}>{product.name}</div>)}
-      </div>
+    
     </div>
   );
 };

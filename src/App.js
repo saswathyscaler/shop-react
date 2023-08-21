@@ -16,6 +16,10 @@ import PrivateRoutes from "./components/PrivateRoute";
 import AdminRoutes from "./components/AdminRoutes";
 import UpdateProduct from "./components/UpdateProduct";
 import Cart from "./widgets/Cart";
+import PaymentSelect from "./widgets/PaymentSelect";
+
+
+
 function App() {
   return (
     <Router>
@@ -28,16 +32,24 @@ function App() {
           <Route path="/product/:productId" element={<ProductDetails />} />
           <Route path="*" element={<NotFound />} />
 
+
+
           <Route element={<PrivateRoutes />}>
           <Route element={<UserDetails />} path="/userdetail" exact></Route>
           <Route element={<Cart/>} path="/cart" exact></Route>
-
+          <Route element={<PaymentSelect/>} path="/paymentSelect" exact></Route>
           </Route>
+
+
+
+
+
           <Route element={<AdminRoutes />}>
             <Route element={<Dashboard />} path="/dashboard" exact></Route>
             <Route exact path="/addproduct" element={<AddProduct />} />
             <Route exact path="/edit/:id" element={<UpdateProduct />} />
           </Route>
+
         </Routes>
         <Footer />
 

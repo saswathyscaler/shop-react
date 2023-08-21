@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+
 
 const UserDetails = () => {
+
+  const navigate = useNavigate()
+
     const [formData, setFormData] = useState({
         name: '',
         mobileNumber: '',
@@ -19,7 +25,9 @@ const UserDetails = () => {
       const handleSubmit = (event) => {
         event.preventDefault();
         console.log('Form data submitted:', formData);
+        navigate('/paymentSelect')
       };
+
     
       return (
         <div className="max-w-md mx-auto  p-6 bg-white shadow-2xl rounded-lg">
