@@ -3,6 +3,7 @@ import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ProductCard from "./ProductCard";
 import { Link } from "react-router-dom";
+import Filterbar from "../widgets/Filterbar";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -25,7 +26,8 @@ const Home = () => {
 
   return (
     <div>
-      <div className="w-full mb-4">
+    <Filterbar />
+    <div className="w-full mb-4">
         <Carousel
           showArrows={true}
           infiniteLoop={true}

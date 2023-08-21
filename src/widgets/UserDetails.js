@@ -18,13 +18,12 @@ const UserDetails = () => {
     
       const handleSubmit = (event) => {
         event.preventDefault();
-        // You can perform any action with the form data here
         console.log('Form data submitted:', formData);
       };
     
       return (
         <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg">
-          <h2 className="text-2xl font-semibold mb-4">Fill up the Form</h2>
+          <h2 className="text-2xl font-semibold mb-4">Fill this for delivery</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="name" className="block text-gray-700">

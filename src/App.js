@@ -14,6 +14,7 @@ import AddProduct from "./components/AddProduct";
 import Dashboard from "./components/Dashboard";
 import PrivateRoutes from "./components/PrivateRoute";
 import AdminRoutes from "./components/AdminRoutes";
+import UpdateProduct from "./components/UpdateProduct";
 function App() {
   return (
     <Router>
@@ -32,6 +33,7 @@ function App() {
           <Route element={<AdminRoutes />}>
             <Route element={<Dashboard />} path="/dashboard" exact></Route>
             <Route exact path="/addproduct" element={<AddProduct />} />
+            <Route exact path="/edit/:id" element={<UpdateProduct />} />
           </Route>
         </Routes>
         <Footer />

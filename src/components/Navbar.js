@@ -8,10 +8,15 @@ import { useNavigate } from 'react-router-dom';
 const Navbar = () => {
   const msg = localStorage.getItem('message');
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('token') ? true : false);
+  const [search, setSearch] = useState("");
+
 
   const navigate = useNavigate();
 const handleLogin=()=>{
 navigate('/login')
+
+
+
 
 }
   const handleLogout = () => {
@@ -36,16 +41,32 @@ navigate('/login')
           </button>
         </div>
       )}
-      <div className="flex items-center bg-white rounded-lg shadow-md px-2 py-1">
-        <input
-          type="text"
-          placeholder="Search for products"
-          className="w-full bg-transparent focus:outline-none"
-        />
-        <button className="text-blue-500">
-          <FontAwesomeIcon icon={faSearch} />
-        </button>
-      </div>
+
+      <form >
+      <input
+        type="text"
+        className="p-1 rounded border m-2"
+        value={search}
+        onChange={(e) => {
+          setSearch(e.target.value);
+        }}
+        name="searchInput"
+      />
+      <button
+        type="submit"
+        className="p-1 bg-blue-700 text-white rounded-md hover:bg-blue-400"
+      >
+      <FontAwesomeIcon icon={faSearch} />
+      </button>
+    </form>
+
+
+
+
+     
+
+
+
 
       <div className="flex space-x-4">
         <div className="relative">
