@@ -22,8 +22,8 @@ const UserDetails = () => {
       };
     
       return (
-        <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-lg">
-          <h2 className="text-2xl font-semibold mb-4">Fill this for delivery</h2>
+        <div className="max-w-md mx-auto  p-6 bg-white shadow-2xl rounded-lg">
+          <h2 className="text-2xl  mb-4">Fill this for delivery</h2>
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
               <label htmlFor="name" className="block text-gray-700">
@@ -44,13 +44,14 @@ const UserDetails = () => {
                 Mobile Number:
               </label>
               <input
-                type="tel"
-                id="mobileNumber"
+              type="tel"
+              id="mobileNumber"
                 name="mobileNumber"
                 value={formData.mobileNumber}
                 onChange={handleInputChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
                 required
+                max={10}
               />
             </div>
             <div className="mb-4">
@@ -61,6 +62,8 @@ const UserDetails = () => {
                 type="tel"
                 id="alternateNumber"
                 name="alternateNumber"
+                max={10}
+
                 value={formData.alternateNumber}
                 onChange={handleInputChange}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"

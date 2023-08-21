@@ -15,6 +15,7 @@ import Dashboard from "./components/Dashboard";
 import PrivateRoutes from "./components/PrivateRoute";
 import AdminRoutes from "./components/AdminRoutes";
 import UpdateProduct from "./components/UpdateProduct";
+import Cart from "./widgets/Cart";
 function App() {
   return (
     <Router>
@@ -28,7 +29,9 @@ function App() {
           <Route path="*" element={<NotFound />} />
 
           <Route element={<PrivateRoutes />}>
-            <Route element={<UserDetails />} path="/userdetail" exact></Route>
+          <Route element={<UserDetails />} path="/userdetail" exact></Route>
+          <Route element={<Cart/>} path="/cart" exact></Route>
+
           </Route>
           <Route element={<AdminRoutes />}>
             <Route element={<Dashboard />} path="/dashboard" exact></Route>

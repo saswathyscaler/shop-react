@@ -7,7 +7,7 @@ import Filterbar from "../widgets/Filterbar";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
-
+  const [filteredProducts, setFilteredProducts] = useState([]); 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/products")
       .then((response) => response.json())
@@ -19,14 +19,17 @@ const Home = () => {
       });
   }, []);
 
+  const handleFilter = (filteredProducts) => {
+    setFilteredProducts(filteredProducts);
+  };
+
   const getRandomImageURL = () => {
     const imageId = Math.floor(Math.random() * 1000);
     return `https://picsum.photos/800/300?random=${imageId}`;
   };
-
   return (
     <div>
-    <Filterbar />
+    <Filterbar onFilter={handleFilter} /> 
     <div className="w-full mb-4">
         <Carousel
           showArrows={true}
@@ -49,14 +52,22 @@ const Home = () => {
         </Carousel>
       </div>
       <div className="grid lg:grid-cols-4 w-[98%] ml-2 md:grid-cols-2 sm:grid-cols-1 gap-4">
-        {products.map((product) => (
-          <Link key={product.id} to={`/product/${product.id}`}>
-            <ProductCard product={product} />
-          </Link>
-        ))}
-      </div>
+      {filteredProducts.length > 0
+        ?
+          filteredProducts.map((product) => (
+            <Link key={product.id} to={`/product/${product.id}`}>
+              <ProductCard product={product} />
+            </Link>
+          ))
+        : 
+          products.map((product) => (
+            <Link key={product.id} to={`/product/${product.id}`}>
+              <ProductCard product={product} />
+            </Link>
+          ))}
     </div>
-  );
+  </div>
+);
 };
 
 export default Home;
