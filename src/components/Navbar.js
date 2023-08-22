@@ -72,13 +72,12 @@ const Navbar = () => {
       </form>
 
       <div className="flex space-x-4">
-        <div className="relative">
+        <div className="relative cursor-pointer"             onClick={() => navigate("/cart")}
+        >
           <FontAwesomeIcon
             icon={faShoppingCart}
             className="text-white text-lg cursor-pointer"
-            onClick={() => navigate("/cart")}
           />
-
           <span className="absolute top-0 left-2 bg-red-500 rounded-full text-white px-1 text-xs">
             3+
           </span>
