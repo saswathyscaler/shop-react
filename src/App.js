@@ -17,8 +17,7 @@ import AdminRoutes from "./components/AdminRoutes";
 import UpdateProduct from "./components/UpdateProduct";
 import Cart from "./widgets/Cart";
 import PaymentPage from "./widgets/PaymentPage";
-
-
+import OrderSuccess from "./widgets/OrderSuccess";
 
 function App() {
   return (
@@ -31,25 +30,23 @@ function App() {
           <Route exact path="/register" element={<Register />} />
           <Route path="/product/:productId" element={<ProductDetails />} />
           <Route path="*" element={<NotFound />} />
-
-
+          <Route exact path="/orderSuccess" element={<OrderSuccess />} />
 
           <Route element={<PrivateRoutes />}>
-          <Route element={<UserDetails />} path="/userdetail" exact></Route>
-          <Route element={<Cart/>} path="/cart" exact></Route>
-          <Route element={<PaymentPage/>} path="/paymentSelect" exact></Route>
+            <Route element={<UserDetails />} path="/userdetail" exact></Route>
+            <Route element={<Cart />} path="/cart" exact></Route>
+            <Route
+              element={<PaymentPage />}
+              path="/paymentSelect"
+              exact
+            ></Route>
           </Route>
-
-
-
-
 
           <Route element={<AdminRoutes />}>
             <Route element={<Dashboard />} path="/dashboard" exact></Route>
             <Route exact path="/addproduct" element={<AddProduct />} />
             <Route exact path="/edit/:id" element={<UpdateProduct />} />
           </Route>
-
         </Routes>
         <Footer />
 

@@ -21,6 +21,7 @@ const UserDetails = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    localStorage.setItem('formData',formData)
     console.log("Form data submitted:", formData);
     navigate("/paymentSelect");
   };
@@ -58,20 +59,7 @@ const UserDetails = () => {
             max={10}
           />
         </div>
-        <div className="mb-4">
-          <label htmlFor="alternateNumber" className="block text-gray-700">
-            Alternate Number:
-          </label>
-          <input
-            type="tel"
-            id="alternateNumber"
-            name="alternateNumber"
-            max={10}
-            value={formData.alternateNumber}
-            onChange={handleInputChange}
-            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-          />
-        </div>
+    
         <div className="mb-4">
           <label htmlFor="address" className="block text-gray-700">
             Address:
