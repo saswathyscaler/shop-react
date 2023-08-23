@@ -16,7 +16,7 @@ import PrivateRoutes from "./components/PrivateRoute";
 import AdminRoutes from "./components/AdminRoutes";
 import UpdateProduct from "./components/UpdateProduct";
 import Cart from "./widgets/Cart";
-import PaymentSelect from "./widgets/PaymentSelect";
+import PaymentPage from "./widgets/PaymentPage";
 
 
 
@@ -37,7 +37,7 @@ function App() {
           <Route element={<PrivateRoutes />}>
           <Route element={<UserDetails />} path="/userdetail" exact></Route>
           <Route element={<Cart/>} path="/cart" exact></Route>
-          <Route element={<PaymentSelect/>} path="/paymentSelect" exact></Route>
+          <Route element={<PaymentPage/>} path="/paymentSelect" exact></Route>
           </Route>
 
 

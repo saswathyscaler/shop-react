@@ -29,7 +29,7 @@ const Cart = () => {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });
-  
+
       if (response.ok) {
         setProducts((prevProducts) =>
           prevProducts.filter((product) => product.id !== productId)
@@ -39,7 +39,6 @@ const Cart = () => {
       console.error("Error removing product:", error);
     }
   };
-  
 
   const calculateTotal = () => {
     let total = 0;
@@ -48,6 +47,12 @@ const Cart = () => {
     }
     return total;
   };
+
+  // Store the total amount in local storage
+  useEffect(() => {
+    localStorage.setItem("cartTotal", calculateTotal());
+  }, [products]);
+
   return (
     <div>
       <div>

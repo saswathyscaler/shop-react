@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { toast } from "react-toastify";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart, faSearch } from "@fortawesome/free-solid-svg-icons";
 
@@ -13,11 +15,10 @@ const Navbar = () => {
   const [search, setSearch] = useState("");
 
   const navigate = useNavigate();
-  
+
   const handleLogin = () => {
     navigate("/login");
   };
-
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -25,7 +26,41 @@ const Navbar = () => {
     setIsLoggedIn(false);
     navigate("/");
   };
+  const searchName = async () => {
+    try {
+      const queryParams = new URLSearchParams({
+        q: search,
+      });
 
+      const url = `http://localhost:8000/api/show?${queryParams}`;
+
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (response.status >= 400) {
+        toast.warn("No property match your query", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching filtered properties:", error);
+      toast.error(`some error occure  ${error}`, {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    }
+  };
+  const handleSearchFormSubmit = (e) => {
+    e.preventDefault();
+    searchName();
+  };
   return (
     <nav className="bg-blue-500 p-4 flex justify-between items-center">
       <div className="flex items-center">
@@ -53,26 +88,26 @@ const Navbar = () => {
         </div>
       )}
 
-      <form>
+      <form onSubmit={handleSearchFormSubmit}>
         <input
           type="text"
           className="p-1 rounded border m-2"
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);
+            searchName();
           }}
           name="searchInput"
         />
-        <button
-          type="submit"
-          className="p-1 bg-blue-700 text-white rounded-md hover:bg-blue-400"
-        >
+        <button>
           <FontAwesomeIcon icon={faSearch} />
         </button>
       </form>
 
       <div className="flex space-x-4">
-        <div className="relative cursor-pointer"             onClick={() => navigate("/cart")}
+        <div
+          className="relative cursor-pointer"
+          onClick={() => navigate("/cart")}
         >
           <FontAwesomeIcon
             icon={faShoppingCart}
