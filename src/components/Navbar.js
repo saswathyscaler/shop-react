@@ -80,6 +80,12 @@ const Navbar = () => {
             All
           </button>
           <button
+          onClick={() => navigate("/allorders")}
+          className="text-white text-sm cursor-pointer"
+        >
+          all orders
+        </button>
+          <button
             onClick={() => navigate("/addproduct")}
             className="text-white text-sm cursor-pointer"
           >
@@ -103,6 +109,7 @@ const Navbar = () => {
           <FontAwesomeIcon icon={faSearch} />
         </button>
       </form>
+      
 
       <div className="flex space-x-4">
         <div

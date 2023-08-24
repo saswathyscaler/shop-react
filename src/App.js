@@ -18,6 +18,7 @@ import UpdateProduct from "./components/UpdateProduct";
 import Cart from "./widgets/Cart";
 import PaymentPage from "./widgets/PaymentPage";
 import OrderSuccess from "./widgets/OrderSuccess";
+import AllOrders from "./widgets/AllOrders";
 
 function App() {
   return (
@@ -37,7 +38,7 @@ function App() {
             <Route element={<Cart />} path="/cart" exact></Route>
             <Route
               element={<PaymentPage />}
-              path="/paymentSelect"
+              path="/paymentpage"
               exact
             ></Route>
           </Route>
@@ -45,6 +46,7 @@ function App() {
           <Route element={<AdminRoutes />}>
             <Route element={<Dashboard />} path="/dashboard" exact></Route>
             <Route exact path="/addproduct" element={<AddProduct />} />
+            <Route exact path="/allorders" element={<AllOrders />} />
             <Route exact path="/edit/:id" element={<UpdateProduct />} />
           </Route>
         </Routes>

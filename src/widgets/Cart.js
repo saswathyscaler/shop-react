@@ -48,7 +48,6 @@ const Cart = () => {
     return total;
   };
 
-  // Store the total amount in local storage
   useEffect(() => {
     localStorage.setItem("cartTotal", calculateTotal());
   }, [products]);
@@ -89,7 +88,7 @@ const Cart = () => {
         </ul>
       </div>
       <button
-        onClick={() => navigate("/userdetail")}
+        onClick={() => navigate("/paymentpage")}
         className="flex items-center bg-[#ff9f00]  p-2 md:p-4 border rounded-md mx-2"
       >
         Place order
