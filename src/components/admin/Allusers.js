@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 const Allusers = () => {
   const [users, setUsers] = useState([]);
 
+
+
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -16,6 +18,8 @@ const Allusers = () => {
       console.error('Error fetching users:', error);
     }
   };
+
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">All Users</h1>
@@ -27,12 +31,13 @@ const Allusers = () => {
                 <img
                   className="w-10 h-10 rounded-full"
                   src=""
-                  alt={`  ${user.name}`}
+                  alt={`${user.name}`}
                 />
               </div>
               <div className="ml-4">
                 <p className="text-lg font-medium text-black">{user.name}</p>
                 <p className="text-gray-500">{user.email}</p>
+                <p className="text-gray-500">{user.ph_no}</p>
               </div>
             </div>
           </li>

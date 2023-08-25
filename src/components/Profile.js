@@ -55,7 +55,7 @@ const Profile = () => {
 
   return (
     <div className="bg-white absolute right-0 top-24 border rounded-xl w-64 h-44 mx-5 flex items-center justify-center ">
-  <div className="flex flex-col items-center gap-2 m-2">
+    <div className="flex flex-col items-center gap-2 m-2">
     <div className="text-center">
       <h3>{user.name}</h3>
       <p className="font-normal text-sm text-[#074FB2]">{user.email}</p>
