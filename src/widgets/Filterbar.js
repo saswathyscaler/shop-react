@@ -31,7 +31,7 @@ const Filterbar = ({ onFilter }) => {
   }, [selectedCategory]);
 
   return (
-    <div className=" bg-blue-100 border rounded-lg ">
+    <div className=" bg-blue-100 border my-2 ">
       <div className="flex justify-evenly flex-col sm:flex-row gap-4 items-center">
         <div
           className="group"
