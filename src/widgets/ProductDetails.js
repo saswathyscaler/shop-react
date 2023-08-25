@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BsCartPlus, BsLightningFill } from "react-icons/bs";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Rating from "../utils/Rating";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -20,41 +21,25 @@ const ProductDetails = () => {
       .catch((error) => console.error("Error fetching product:", error));
   }, [productId]);
 
-  const handleCart = async() => {
-    const response = await fetch(`http://localhost:8000/api/cart/add/${productId}`, {
-      method: "POST",
-      headers: { Authorization: `Bearer ${token}` },
-      body: JSON.stringify(),
-    });
-    
+  const handleCart = async () => {
+    const response = await fetch(
+      `http://localhost:8000/api/cart/add/${productId}`,
+      {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: JSON.stringify(),
+      }
+    );
+
     const data = await response.json();
     console.log("data", data);
-
-
-
-
-
-
-
-
-
-
 
     toast.success(`Added "${product?.name}" to cart`);
   };
 
-  
-
-
-
-
-
-
   const handleBuy = () => {
     navigate("/userdetail");
   };
-
-
 
   return (
     <div>
@@ -128,8 +113,10 @@ const ProductDetails = () => {
                 {product?.description || "No description available"}
               </p>
             </div>
+            <Rating />
           </div>
         </div>
+
       </div>
     </div>
   );

@@ -86,6 +86,7 @@ const Navbar = () => {
           type="text"
           className="p-1 rounded border m-2"
           value={search}
+          placeholder="search what you desire"
           onChange={(e) => {
             setSearch(e.target.value);
             searchName();

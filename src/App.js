@@ -13,7 +13,6 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import NotFound from "./pages/NotFound";
 import Home from "./components/Home";
-import UserDetails from "./widgets/UserDetails";
 import ProductDetails from "./widgets/ProductDetails";
 import AddProduct from "./components/admin/AddProduct";
 import Dashboard from "./components/admin/Dashboard";
@@ -43,7 +42,6 @@ function App() {
           <Route exact path="/profile" element={<Profile />} />
 
           <Route element={<PrivateRoutes />}>
-            <Route element={<UserDetails />} path="/userdetail" exact></Route>
             <Route element={<Cart />} path="/cart" exact></Route>
             <Route element={<PaymentPage />} path="/paymentpage" exact></Route>
           </Route>
