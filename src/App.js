@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Outlet,
+} from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from "./components/Login";
@@ -21,6 +26,7 @@ import OrderSuccess from "./widgets/OrderSuccess";
 import AllOrders from "./widgets/AllOrders";
 import Profile from "./components/Profile";
 import AdminDashboard from "./components/admin/AdminDashboard";
+import Allusers from "./components/admin/Allusers";
 
 function App() {
   return (
@@ -36,29 +42,23 @@ function App() {
           <Route exact path="/orderSuccess" element={<OrderSuccess />} />
           <Route exact path="/profile" element={<Profile />} />
 
-
-
-
-
-
-
-
           <Route element={<PrivateRoutes />}>
             <Route element={<UserDetails />} path="/userdetail" exact></Route>
             <Route element={<Cart />} path="/cart" exact></Route>
-            <Route
-              element={<PaymentPage />}
-              path="/paymentpage"
-              exact
-            ></Route>
+            <Route element={<PaymentPage />} path="/paymentpage" exact></Route>
           </Route>
 
           <Route element={<AdminRoutes />}>
-
-            <Route element={<AdminDashboard />} path="/admindashboard" exact></Route>
+            <Route
+              element={<AdminDashboard />}
+              path="/admindashboard"
+              exact
+            ></Route>
+            
             <Route element={<Dashboard />} path="/dashboard" exact></Route>
             <Route exact path="/addproduct" element={<AddProduct />} />
             <Route exact path="/allorders" element={<AllOrders />} />
+            <Route exact path="/allusers" element={<Allusers />} />
             <Route exact path="/edit/:id" element={<UpdateProduct />} />
           </Route>
         </Routes>
