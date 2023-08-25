@@ -6,19 +6,21 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import NotFound from "./components/NotFound";
+import NotFound from "./pages/NotFound";
 import Home from "./components/Home";
 import UserDetails from "./widgets/UserDetails";
 import ProductDetails from "./widgets/ProductDetails";
-import AddProduct from "./components/AddProduct";
-import Dashboard from "./components/Dashboard";
-import PrivateRoutes from "./components/PrivateRoute";
-import AdminRoutes from "./components/AdminRoutes";
-import UpdateProduct from "./components/UpdateProduct";
+import AddProduct from "./components/admin/AddProduct";
+import Dashboard from "./components/admin/Dashboard";
+import PrivateRoutes from "./private/PrivateRoute";
+import AdminRoutes from "./private/AdminRoutes";
+import UpdateProduct from "./components/admin/UpdateProduct";
 import Cart from "./widgets/Cart";
 import PaymentPage from "./widgets/PaymentPage";
 import OrderSuccess from "./widgets/OrderSuccess";
 import AllOrders from "./widgets/AllOrders";
+import Profile from "./components/Profile";
+import AdminDashboard from "./components/admin/AdminDashboard";
 
 function App() {
   return (
@@ -32,6 +34,14 @@ function App() {
           <Route path="/product/:productId" element={<ProductDetails />} />
           <Route path="*" element={<NotFound />} />
           <Route exact path="/orderSuccess" element={<OrderSuccess />} />
+          <Route exact path="/profile" element={<Profile />} />
+
+
+
+
+
+
+
 
           <Route element={<PrivateRoutes />}>
             <Route element={<UserDetails />} path="/userdetail" exact></Route>
@@ -44,6 +54,8 @@ function App() {
           </Route>
 
           <Route element={<AdminRoutes />}>
+
+            <Route element={<AdminDashboard />} path="/admindashboard" exact></Route>
             <Route element={<Dashboard />} path="/dashboard" exact></Route>
             <Route exact path="/addproduct" element={<AddProduct />} />
             <Route exact path="/allorders" element={<AllOrders />} />

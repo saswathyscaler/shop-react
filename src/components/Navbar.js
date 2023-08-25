@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-
+import { CgProfile } from 'react-icons/cg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart, faSearch } from "@fortawesome/free-solid-svg-icons";
-
 import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
+import Profile from "./Profile";
 
 const Navbar = () => {
   const msg = localStorage.getItem("message");
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("token") ? true : false
   );
+
+
+  const [showProfile, setShowProfile] = useState(false); 
+
+  const toggleProfilePopup = () => {
+
+    setShowProfile(!showProfile);
+  };
   const [search, setSearch] = useState("");
 
   const navigate = useNavigate();
@@ -71,28 +79,7 @@ const Navbar = () => {
           onClick={() => navigate("/")}
         />
       </div>
-      {msg === "Logged in as admin" && (
-        <div className="space-x-4">
-          <button
-            onClick={() => navigate("/dashboard")}
-            className="text-white text-sm cursor-pointer"
-          >
-            All
-          </button>
-          <button
-          onClick={() => navigate("/allorders")}
-          className="text-white text-sm cursor-pointer"
-        >
-          all orders
-        </button>
-          <button
-            onClick={() => navigate("/addproduct")}
-            className="text-white text-sm cursor-pointer"
-          >
-            Add
-          </button>
-        </div>
-      )}
+    
 
       <form onSubmit={handleSearchFormSubmit}>
         <input
@@ -125,22 +112,25 @@ const Navbar = () => {
           </span>
         </div>
 
+        
         {isLoggedIn ? (
           <button
             onClick={handleLogout}
             className="text-white px-4 py-2 rounded hover:text-slate-500"
           >
-            Logout
+          Logout
           </button>
-        ) : (
+          ) : (
           <button
-            onClick={handleLogin}
-            className="text-white text-sm cursor-pointer"
+          onClick={handleLogin}
+          className="text-white text-sm cursor-pointer"
           >
-            Login
+          Login
           </button>
-        )}
+          )}
+          <CgProfile className="text-white text-3xl cursor-pointer" onClick={toggleProfilePopup}/>
       </div>
+      {showProfile && <Profile />}
     </nav>
   );
 };

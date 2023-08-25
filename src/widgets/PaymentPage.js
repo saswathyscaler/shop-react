@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Razorpay from "react-razorpay";
 import { useNavigate } from "react-router-dom";
 
 const PaymentPage = () => {
@@ -66,7 +65,6 @@ const PaymentPage = () => {
         
               if (res.ok) {
                 console.log("Form data saved successfully");
-                // Redirect to a success page or take other actions
                 navigate("/orderSuccess");
               } else {
                 console.error("Error saving form data");
