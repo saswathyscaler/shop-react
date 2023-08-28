@@ -49,8 +49,47 @@ const ProductDetails = () => {
     navigate("/userdetail");
   };
 
-  
 
+  const addWishlist = async () => {
+    const response = await fetch(
+      `http://localhost:8000/api/wishlist/add/${productId}`,
+      {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: JSON.stringify(),
+      }
+    );
+
+    const data = await response.json();
+    console.log("data", data);
+
+    toast.success(`${product?.name} wishlisted`);
+  };
+
+  const removeWishlist = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/wishlist/remove/${productId}`,  
+        {
+          method: "DELETE",
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      const data = await response.json();
+      console.log("data", data);
+
+      if (response.ok) {
+        setIsHeartFilled(false);  
+        toast.success(`${product?.name} removed from wishlist`);
+      } else {
+        toast.error("Failed to remove from wishlist");
+      }
+    } catch (error) {
+      console.error("Error removing from wishlist:", error);
+    }
+  };
+  
   return (
     <div>
       <div className="p-2 min-h-screen">
@@ -86,13 +125,16 @@ const ProductDetails = () => {
                 {product?.name?.toUpperCase()}
               </h1>
               <div onClick={toggleHeart} className="cursor-pointer">
-              {isHeartFilled ? (
-                <AiFillHeart className="text-4xl "/>
-              ) : (
-                <AiOutlineHeart className="text-4xl " />
-              )}
-            </div>
-            
+                {isHeartFilled ? (
+                  <AiFillHeart onClick={removeWishlist} className="text-4xl " />
+                ) : (
+                  <AiOutlineHeart
+                    
+                    onClick={addWishlist}
+                    className="text-4xl "
+                  />
+                )}
+              </div>
             </div>
             <span className="text-blue-400">
               Be the first to Review this product
