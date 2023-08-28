@@ -6,16 +6,17 @@ import { faShoppingCart, faSearch } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import Profile from "./Profile";
+import { useLocation } from "react-router-dom";
 
-const Navbar = ({ onSearch }) => {
+
+const Navbar = () => {
+
+  
   const navigate = useNavigate();
-  const [search, setSearch] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("token") ? true : false
   );
-
   const [showProfile, setShowProfile] = useState(false);
-
   const toggleProfile = () => {
     setShowProfile(!showProfile);
   };
@@ -31,11 +32,7 @@ const Navbar = ({ onSearch }) => {
     navigate("/");
   };
 
-  const handleSearchChange = (e) => {
-    const value = e.target.value;
-    setSearch(value);
-    onSearch(value);
-  };
+ 
   return (
     <nav className="bg-blue-500 p-4 flex justify-between items-center">
       <div className="flex items-center">
@@ -47,20 +44,7 @@ const Navbar = ({ onSearch }) => {
         />
       </div>
 
-      <form>
-        <input
-          type="text"
-          className="p-1 rounded border m-2"
-          value={search}
-          placeholder="search what you desire"
-          onChange={handleSearchChange}
-          name="searchInput"
-        />
-        <button type="submit" onClick={(e)=>e.preventDefault}>
-          <FontAwesomeIcon icon={faSearch} />
-        </button>
-      </form>
-
+  
       <div className="flex space-x-4">
         <div
           className="relative cursor-pointer"

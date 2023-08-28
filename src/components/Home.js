@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ProductCard from "./ProductCard";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Filterbar from "../widgets/Filterbar";
-import Navbar from "./Navbar"; 
+import Navbar from "./Navbar";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingCart, faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
@@ -12,6 +14,7 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 2;
 
+  const location = useLocation();
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/products")
@@ -40,25 +43,53 @@ const Home = () => {
     setFilteredProducts(filtered);
     setCurrentPage(1);
   };
+  const [search, setSearch] = useState("");
 
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearch(value);
 
-
+    if (value.trim() === "") {
+      setFilteredProducts([]);
+      setCurrentPage(1);
+    } else {
+      handleFilter2(value);
+    }
+  };
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProducts.length > 0
-    ? filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct)
-    : products.slice(indexOfFirstProduct, indexOfLastProduct);
+  const currentProducts =
+    filteredProducts.length > 0
+      ? filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct)
+      : products.slice(indexOfFirstProduct, indexOfLastProduct);
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
   return (
     <div>
-    <Navbar onSearch={handleFilter2} />
+
+
+    <div className="relative flex justify-center">
+    <form className="absolute bottom-[1.08rem] ">
+      <input
+        type="text"
+        className="p-1 rounded border m-2"
+        value={search}
+        placeholder="search what you desire"
+        onChange={handleSearchChange}
+        name="searchInput"
+      />
+      <button type="submit" onClick={(e) => e.preventDefault()}>
+        <FontAwesomeIcon icon={faSearch} />
+      </button>
+    </form>
+  </div>
+  
+  
+
       <Filterbar onFilter={handleFilter} />
       <div className="w-full mb-4">
-
-
         <Carousel
           showArrows={true}
           infiniteLoop={true}
@@ -81,27 +112,37 @@ const Home = () => {
       </div>
 
       <div className="grid lg:grid-cols-4 w-[98%] ml-2 md:grid-cols-2 sm:grid-cols-1 gap-4">
-      {currentProducts.map((product) => (
-        <Link key={product.id} to={`/product/${product.id}`}>
-          <ProductCard product={product} />
-        </Link>
-      ))}
+        {currentProducts.map((product) => (
+          <Link key={product.id} to={`/product/${product.id}`}>
+            <ProductCard product={product} />
+          </Link>
+        ))}
+      </div>
+      <div className="flex justify-center mt-4">
+        {[
+          ...Array(
+            Math.ceil(
+              filteredProducts.length > 0
+                ? filteredProducts.length / productsPerPage
+                : products.length / productsPerPage
+            )
+          ),
+        ].map((_, index) => (
+          <button
+            key={index}
+            onClick={() => paginate(index + 1)}
+            className={`mx-1 py-2 px-4 rounded ${
+              currentPage === index + 1
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200"
+            }`}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </div>
-    <div className="flex justify-center mt-4">
-      {[...Array(Math.ceil(filteredProducts.length > 0 ? filteredProducts.length / productsPerPage : products.length / productsPerPage))].map((_, index) => (
-        <button
-          key={index}
-          onClick={() => paginate(index + 1)}
-          className={`mx-1 py-2 px-4 rounded ${
-            currentPage === index + 1 ? "bg-blue-500 text-white" : "bg-gray-200"
-          }`}
-        >
-          {index + 1}
-        </button>
-      ))}
-    </div>
-  </div>
-);
+  );
 };
 
 export default Home;
