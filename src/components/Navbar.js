@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { CgProfile } from 'react-icons/cg';
+import { CgProfile } from "react-icons/cg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart, faSearch } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/logo.png";
@@ -14,13 +14,11 @@ const Navbar = ({ onSearch }) => {
     localStorage.getItem("token") ? true : false
   );
 
-  const [showProfile, setShowProfile] = useState(false); 
+  const [showProfile, setShowProfile] = useState(false);
 
   const toggleProfile = () => {
-
     setShowProfile(!showProfile);
   };
-  
 
   const handleLogin = () => {
     navigate("/login");
@@ -33,14 +31,10 @@ const Navbar = ({ onSearch }) => {
     navigate("/");
   };
 
-  const searchName = async () => {
-  
-  };
-
-
-  const handleSearchFormSubmit = (e) => {
-    e.preventDefault();
-    onSearch(search);
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+    setSearch(value);
+    onSearch(value);
   };
   return (
     <nav className="bg-blue-500 p-4 flex justify-between items-center">
@@ -52,21 +46,20 @@ const Navbar = ({ onSearch }) => {
           onClick={() => navigate("/")}
         />
       </div>
-    
 
-      <form onSubmit={handleSearchFormSubmit}>
-      <input
-        type="text"
-        className="p-1 rounded border m-2"
-        value={search}
-        placeholder="search what you desire"
-        onChange={(e) => setSearch(e.target.value)}
-        name="searchInput"
-      />
-      <button type="submit">
-        <FontAwesomeIcon icon={faSearch} />
-      </button>
-    </form>
+      <form>
+        <input
+          type="text"
+          className="p-1 rounded border m-2"
+          value={search}
+          placeholder="search what you desire"
+          onChange={handleSearchChange}
+          name="searchInput"
+        />
+        <button type="submit" onClick={(e)=>e.preventDefault}>
+          <FontAwesomeIcon icon={faSearch} />
+        </button>
+      </form>
 
       <div className="flex space-x-4">
         <div
@@ -82,28 +75,28 @@ const Navbar = ({ onSearch }) => {
           </span>
         </div>
 
-        
         {isLoggedIn ? (
           <button
             onClick={handleLogout}
             className="text-white px-4 py-2 rounded hover:text-slate-500"
           >
-          Logout
+            Logout
           </button>
-          ) : (
+        ) : (
           <button
-          onClick={handleLogin}
-          className="text-white text-sm cursor-pointer"
+            onClick={handleLogin}
+            className="text-white text-sm cursor-pointer"
           >
-          Login
+            Login
           </button>
-          )}
-          <CgProfile className="text-white text-3xl cursor-pointer" onClick={toggleProfile}/>
+        )}
+        <CgProfile
+          className="text-white text-3xl cursor-pointer"
+          onClick={toggleProfile}
+        />
       </div>
       {showProfile && <Profile />}
-
     </nav>
-            
   );
 };
 
