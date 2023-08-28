@@ -7,7 +7,10 @@ import Filterbar from "../widgets/Filterbar";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]); 
+  const [filteredProducts, setFilteredProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 2;
+
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/products")
       .then((response) => response.json())
@@ -21,16 +24,29 @@ const Home = () => {
 
   const handleFilter = (filteredProducts) => {
     setFilteredProducts(filteredProducts);
+    setCurrentPage(1); // Reset page number when filtering
   };
 
   const getRandomImageURL = () => {
     const imageId = Math.floor(Math.random() * 1000);
     return `https://picsum.photos/800/300?random=${imageId}`;
   };
+
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = filteredProducts.length > 0
+    ? filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct)
+    : products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   return (
     <div>
-    <Filterbar onFilter={handleFilter} /> 
-    <div className="w-full mb-4">
+      <Filterbar onFilter={handleFilter} />
+      <div className="w-full mb-4">
+
+
         <Carousel
           showArrows={true}
           infiniteLoop={true}
@@ -51,20 +67,26 @@ const Home = () => {
           ))}
         </Carousel>
       </div>
+
       <div className="grid lg:grid-cols-4 w-[98%] ml-2 md:grid-cols-2 sm:grid-cols-1 gap-4">
-      {filteredProducts.length > 0
-        ?
-          filteredProducts.map((product) => (
-            <Link key={product.id} to={`/product/${product.id}`}>
-              <ProductCard product={product} />
-            </Link>
-          ))
-        : 
-          products.map((product) => (
-            <Link key={product.id} to={`/product/${product.id}`}>
-              <ProductCard product={product} />
-            </Link>
-          ))}
+      {currentProducts.map((product) => (
+        <Link key={product.id} to={`/product/${product.id}`}>
+          <ProductCard product={product} />
+        </Link>
+      ))}
+    </div>
+    <div className="flex justify-center mt-4">
+      {[...Array(Math.ceil(filteredProducts.length > 0 ? filteredProducts.length / productsPerPage : products.length / productsPerPage))].map((_, index) => (
+        <button
+          key={index}
+          onClick={() => paginate(index + 1)}
+          className={`mx-1 py-2 px-4 rounded ${
+            currentPage === index + 1 ? "bg-blue-500 text-white" : "bg-gray-200"
+          }`}
+        >
+          {index + 1}
+        </button>
+      ))}
     </div>
   </div>
 );
