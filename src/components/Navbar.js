@@ -7,12 +7,12 @@ import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import Profile from "./Profile";
 
-const Navbar = () => {
-
+const Navbar = ({ onSearch }) => {
+  const navigate = useNavigate();
+  const [search, setSearch] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("token") ? true : false
   );
-
 
   const [showProfile, setShowProfile] = useState(false); 
 
@@ -20,9 +20,7 @@ const Navbar = () => {
 
     setShowProfile(!showProfile);
   };
-  const [search, setSearch] = useState("");
-
-  const navigate = useNavigate();
+  
 
   const handleLogin = () => {
     navigate("/login");
@@ -35,43 +33,14 @@ const Navbar = () => {
     navigate("/");
   };
 
-  
   const searchName = async () => {
-    try {
-      const queryParams = new URLSearchParams({
-        q: search,
-      });
-
-      const url = `http://localhost:8000/api/show?${queryParams}`;
-
-      const response = await fetch(url);
-      const data = await response.json();
-
-      if (response.status >= 400) {
-        toast.warn("No property match your query", {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-        });
-      }
-    } catch (error) {
-      console.error("Error fetching filtered properties:", error);
-      toast.error(`some error occure  ${error}`, {
-        position: "top-right",
-        autoClose: 3000,
-      });
-    }
+  
   };
 
 
   const handleSearchFormSubmit = (e) => {
     e.preventDefault();
-    searchName();
+    onSearch(search);
   };
   return (
     <nav className="bg-blue-500 p-4 flex justify-between items-center">
@@ -86,22 +55,18 @@ const Navbar = () => {
     
 
       <form onSubmit={handleSearchFormSubmit}>
-        <input
-          type="text"
-          className="p-1 rounded border m-2"
-          value={search}
-          placeholder="search what you desire"
-          onChange={(e) => {
-            setSearch(e.target.value);
-            searchName();
-          }}
-          name="searchInput"
-        />
-        <button>
-          <FontAwesomeIcon icon={faSearch} />
-        </button>
-      </form>
-      
+      <input
+        type="text"
+        className="p-1 rounded border m-2"
+        value={search}
+        placeholder="search what you desire"
+        onChange={(e) => setSearch(e.target.value)}
+        name="searchInput"
+      />
+      <button type="submit">
+        <FontAwesomeIcon icon={faSearch} />
+      </button>
+    </form>
 
       <div className="flex space-x-4">
         <div
@@ -136,7 +101,9 @@ const Navbar = () => {
           <CgProfile className="text-white text-3xl cursor-pointer" onClick={toggleProfile}/>
       </div>
       {showProfile && <Profile />}
+
     </nav>
+            
   );
 };
 

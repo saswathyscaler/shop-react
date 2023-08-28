@@ -9,7 +9,6 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import NotFound from "./pages/NotFound";
 import Home from "./components/Home";
@@ -31,7 +30,7 @@ import WishList from "./widgets/WishList";
 function App() {
   return (
     <Router>
-      <Navbar />
+
       <>
         <Routes>
           <Route exact path="/" element={<Home />} />

@@ -4,12 +4,14 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ProductCard from "./ProductCard";
 import { Link } from "react-router-dom";
 import Filterbar from "../widgets/Filterbar";
+import Navbar from "./Navbar"; 
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 2;
+
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/products")
@@ -31,6 +33,15 @@ const Home = () => {
     const imageId = Math.floor(Math.random() * 1000);
     return `https://picsum.photos/800/300?random=${imageId}`;
   };
+  const handleFilter2 = (searchQuery) => {
+    const filtered = products.filter((product) =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+    setCurrentPage(1);
+  };
+
+
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -43,6 +54,7 @@ const Home = () => {
   };
   return (
     <div>
+    <Navbar onSearch={handleFilter2} />
       <Filterbar onFilter={handleFilter} />
       <div className="w-full mb-4">
 
