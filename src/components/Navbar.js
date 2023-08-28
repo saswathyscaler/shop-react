@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { CgProfile } from 'react-icons/cg';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Profile from "./Profile";
 
 const Navbar = () => {
-  const msg = localStorage.getItem("message");
+
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("token") ? true : false
   );
@@ -16,7 +16,7 @@ const Navbar = () => {
 
   const [showProfile, setShowProfile] = useState(false); 
 
-  const toggleProfilePopup = () => {
+  const toggleProfile = () => {
 
     setShowProfile(!showProfile);
   };
@@ -34,6 +34,8 @@ const Navbar = () => {
     setIsLoggedIn(false);
     navigate("/");
   };
+
+  
   const searchName = async () => {
     try {
       const queryParams = new URLSearchParams({
@@ -65,6 +67,8 @@ const Navbar = () => {
       });
     }
   };
+
+
   const handleSearchFormSubmit = (e) => {
     e.preventDefault();
     searchName();
@@ -129,7 +133,7 @@ const Navbar = () => {
           Login
           </button>
           )}
-          <CgProfile className="text-white text-3xl cursor-pointer" onClick={toggleProfilePopup}/>
+          <CgProfile className="text-white text-3xl cursor-pointer" onClick={toggleProfile}/>
       </div>
       {showProfile && <Profile />}
     </nav>

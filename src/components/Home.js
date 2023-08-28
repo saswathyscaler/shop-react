@@ -24,7 +24,7 @@ const Home = () => {
 
   const handleFilter = (filteredProducts) => {
     setFilteredProducts(filteredProducts);
-    setCurrentPage(1); // Reset page number when filtering
+    setCurrentPage(1);
   };
 
   const getRandomImageURL = () => {
