@@ -49,7 +49,7 @@ const ProductDetails = () => {
             <img
               src={`http://localhost:8000/storage/${product?.image}`}
               alt={product?.name}
-              className="w-full border rounded-lg"
+              className="w-full h-[27rem] border rounded-lg"
             />
 
             <div className="flex justify-center mt-4">
@@ -113,10 +113,9 @@ const ProductDetails = () => {
                 {product?.description || "No description available"}
               </p>
             </div>
-            <Rating />
+            <Rating productId={productId} />
           </div>
         </div>
-
       </div>
     </div>
   );

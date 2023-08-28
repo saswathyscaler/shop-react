@@ -26,6 +26,7 @@ import AllOrders from "./widgets/AllOrders";
 import Profile from "./components/Profile";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import Allusers from "./components/admin/Allusers";
+import WishList from "./widgets/WishList";
 
 function App() {
   return (
@@ -40,19 +41,19 @@ function App() {
           <Route path="*" element={<NotFound />} />
           <Route exact path="/orderSuccess" element={<OrderSuccess />} />
           <Route exact path="/profile" element={<Profile />} />
-
           <Route element={<PrivateRoutes />}>
             <Route element={<Cart />} path="/cart" exact></Route>
             <Route element={<PaymentPage />} path="/paymentpage" exact></Route>
+            <Route element={<WishList />} path="/wishlist" exact></Route>
           </Route>
-
+          //ADMIN DASBOARD
           <Route element={<AdminRoutes />}>
             <Route
               element={<AdminDashboard />}
               path="/admindashboard"
               exact
             ></Route>
-            
+
             <Route element={<Dashboard />} path="/dashboard" exact></Route>
             <Route exact path="/addproduct" element={<AddProduct />} />
             <Route exact path="/allorders" element={<AllOrders />} />
