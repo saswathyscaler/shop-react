@@ -2,16 +2,12 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { CgProfile } from "react-icons/cg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/logo.png";
 import { useNavigate } from "react-router-dom";
 import Profile from "./Profile";
-import { useLocation } from "react-router-dom";
-
 
 const Navbar = () => {
-
-  
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("token") ? true : false
@@ -32,7 +28,6 @@ const Navbar = () => {
     navigate("/");
   };
 
- 
   return (
     <nav className="bg-blue-500 p-4 flex justify-between items-center">
       <div className="flex items-center">
@@ -43,8 +38,6 @@ const Navbar = () => {
           onClick={() => navigate("/")}
         />
       </div>
-
-  
       <div className="flex space-x-4">
         <div
           className="relative cursor-pointer"

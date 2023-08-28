@@ -4,17 +4,15 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ProductCard from "./ProductCard";
 import { Link, useLocation } from "react-router-dom";
 import Filterbar from "../widgets/Filterbar";
-import Navbar from "./Navbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingCart, faSearch } from "@fortawesome/free-solid-svg-icons";
+import {  faSearch } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 2;
+  const productsPerPage = 4;
 
-  const location = useLocation();
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/products")

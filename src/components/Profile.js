@@ -68,7 +68,7 @@ const Profile = () => {
 
   return (
     <div
-      className={`bg-white absolute right-0 top-16 border rounded-xl w-64 h-44 mx-5 flex z-10  justify-center ${
+      className={`bg-white absolute right-0 top-16 border rounded-xl w-52  h-auto mx-5 flex z-10  justify-center ${
         profileOpen ? "" : "hidden"
       }`}
     >
