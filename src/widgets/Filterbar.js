@@ -66,8 +66,8 @@ const Filterbar = ({ onFilter }) => {
           <span className=" text-black px-2 py-1 rounded">Mobiles</span>
 
         </div>
-        <div onClick={() => handleCategoryClick("Pants")}>
-          <img src={pant} className="w-16" alt="pants" />
+        <div  onClick={() => handleCategoryClick("Pants")}>
+          <img src={pant} className="w-16 " alt="pants" />
           <br/>
           <span className=" text-black px-2 py-1 rounded">Trousers</span>
 

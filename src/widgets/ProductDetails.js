@@ -3,11 +3,15 @@ import { BsCartPlus, BsLightningFill } from "react-icons/bs";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Rating from "../utils/Rating";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
+  const [isHeartFilled, setIsHeartFilled] = useState(false);
+
   const navigate = useNavigate();
+
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -37,9 +41,15 @@ const ProductDetails = () => {
     toast.success(`Added "${product?.name}" to cart`);
   };
 
+  const toggleHeart = () => {
+    setIsHeartFilled((prevState) => !prevState);
+  };
+
   const handleBuy = () => {
     navigate("/userdetail");
   };
+
+  
 
   return (
     <div>
@@ -69,11 +79,21 @@ const ProductDetails = () => {
               </button>
             </div>
           </div>
-          <div className="w-full md:w-1/2">
-            <h1 className="mb-5 font-thin text-5xl text-black items-center">
-              {product?.name?.toUpperCase()}
-            </h1>
 
+          <div className="w-full md:w-1/2">
+            <div className="flex justify-between">
+              <h1 className="mb-5 font-thin text-5xl text-black items-center">
+                {product?.name?.toUpperCase()}
+              </h1>
+              <div onClick={toggleHeart} className="cursor-pointer">
+              {isHeartFilled ? (
+                <AiFillHeart className="text-4xl "/>
+              ) : (
+                <AiOutlineHeart className="text-4xl " />
+              )}
+            </div>
+            
+            </div>
             <span className="text-blue-400">
               Be the first to Review this product
             </span>
