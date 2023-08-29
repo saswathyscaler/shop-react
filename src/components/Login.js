@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useState ,useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { GoogleLogin } from "react-google-login";
+import { GoogleLoginButton } from "react-social-login-buttons";
+import { LoginSocialGoogle } from "reactjs-social-login";
 
 
 const Login = () => {
@@ -8,6 +11,8 @@ const Login = () => {
     email: "",
     password: "",
   });
+
+
 
   const [showPassword] = useState(false);
   const handleChange = (e) => {
@@ -59,7 +64,7 @@ const Login = () => {
     });
     let data = await response.json();
     console.log(data);
-    const { message, token,user_id,user_name } = data;
+    const { message, token, user_id, user_name } = data;
     console.log("token :", token);
     console.log("message :", message);
 
@@ -106,7 +111,6 @@ const Login = () => {
       console.log("logged in successfully");
       navigate("/");
       window.location.reload();
-
     }
   };
 
@@ -115,11 +119,18 @@ const Login = () => {
   const nav = () => {
     navigate("/register");
   };
+  const responseGoogle=(data)=>{
+    console.log( "Google Login Data:", data);
+    console.log(data.profileObj);
+    console.log(data.tokenId);
 
+    navigate("/"); 
+  }
+ 
   return (
     <>
-    <div className="bg-gray-700 flex justify-center items-center min-h-screen">
-    <div className="bg-gray-100 p-3 border rounded-xl shadow-xl max-w-md w-full sm:w-10/12 md:w-8/12 lg:w-6/12"> 
+      <div className="bg-gray-700 flex justify-center items-center min-h-screen">
+        <div className="bg-gray-100 p-3 border rounded-xl shadow-xl max-w-md w-full sm:w-10/12 md:w-8/12 lg:w-6/12">
           <h1 className="text-3xl text-blue-700 font-bold text-center">
             Login Here
           </h1>
@@ -163,6 +174,25 @@ const Login = () => {
                 </p>
               </form>
 
+              <LoginSocialGoogle
+              client_id="486752836406-o9gefd6913es58qdekf76bk4srvea82o.apps.googleusercontent.com"
+              scope="openid profile email"
+              discoveryDocs="claims_supported"
+              access_type="offline"
+              onResolve={responseGoogle}
+
+              
+              
+              
+              
+              
+              onReject={(err) => {
+                console.log(err);
+              }}
+            >
+              <GoogleLoginButton />
+            </LoginSocialGoogle>
+
               <div className="flex justify-center items-center gap-4 mt-4">
                 <p className="text-[#074FB2] text-base">
                   Don't have an account:
@@ -174,7 +204,6 @@ const Login = () => {
                   Register
                 </button>
               </div>
-
               <div className="flex justify-center items-center gap-4 mt-4">
                 <p className="text-[#074FB2] text-base">Back to home:</p>
                 <button
