@@ -55,10 +55,15 @@ const Cart = () => {
     localStorage.setItem("cartTotal", calculateTotal());
   }, [products]);
 
+  const isCartEmpty = calculateTotal() === 0;
+
   return (
     <div>
       <div>
-        <h2>Your Cart</h2>
+       
+        {products.length === 0 ? (
+          <h1>Your cart is empty.</h1>
+        ) : (
         <ul className="grid grid-cols-6 m-4">
           {products.map((product) => (
             <li
@@ -91,10 +96,14 @@ const Cart = () => {
             Total: ₹{calculateTotal()}
           </div>
         </ul>
+        )}
       </div>
       <button
         onClick={() => navigate("/paymentpage")}
-        className="flex items-center bg-[#ff9f00]  p-2 md:p-4 border rounded-md mx-2"
+        className={`flex items-center bg-[#ff9f00] p-2 md:p-4 border rounded-md mx-2 ${
+          isCartEmpty ? "cursor-not-allowed opacity-50" : ""
+        }`}
+        disabled={isCartEmpty}
       >
         Place order
       </button>
