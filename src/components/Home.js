@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import ProductCard from "./ProductCard";
-import { Link, useLocation } from "react-router-dom";
-import Filterbar from "../widgets/Filterbar";
+import { Link } from "react-router-dom";
+import Filterbar from "../utils/Filterbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faSearch } from "@fortawesome/free-solid-svg-icons";
 
