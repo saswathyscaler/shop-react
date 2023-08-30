@@ -7,6 +7,7 @@ const Cart = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [couponApplied, setCouponApplied] = useState(false);
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
 
   const [coupons, setCoupons] = useState([]);
 
@@ -84,6 +85,10 @@ const Cart = () => {
 
   const isCartEmpty = calculateTotal() === 0;
 
+
+
+
+
   const handleCoupon = async (couponId) => {
     try {
       const response = await fetch(
@@ -98,7 +103,15 @@ const Cart = () => {
       if (response.ok) {
         const data = await response.json();
         const coupon = data.coupon;
-        if (coupon.is_active) {
+        if (appliedCoupon === couponId) {
+          setAppliedCoupon(null);
+          setCouponApplied(false);
+          localStorage.setItem("cartTotal", calculateTotal());
+          toast.info("Coupon removed");
+}
+
+
+       else if (coupon.is_active) {
           console.log("Coupon Clicked:", coupon);
 
           if (coupon.min_order < calculateTotal()) {
@@ -113,6 +126,7 @@ const Cart = () => {
               console.log("Discounted Total (Fixed):", discountedTotal);
             }
             localStorage.setItem("cartTotal", discountedTotal);
+            setAppliedCoupon(couponId);
             setCouponApplied(true);
 
             toast.success("Coupon added");
@@ -120,7 +134,7 @@ const Cart = () => {
             toast.warn("You are not eligible for this coupon");
           }
         }else{
-          toast("this token is available")
+          toast("this token is not available")
         }
       } else {
         console.error("Error fetching coupon details:", response.statusText);

@@ -51,18 +51,12 @@ const UpdateCoupon = () => {
           navigate('/allcoupons');
         }
       };
-
-
-
-
-
-
-    const addCoupon = async (e) => {
+    const updateCoupon = async (e) => {
         e.preventDefault();
     
         try {
           const response = await fetch(`http://127.0.0.1:8000/api/coupons/${id}/edit`, {
-            method: "PUT",
+            method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`,
               },
@@ -70,7 +64,7 @@ const UpdateCoupon = () => {
           });
     
           const data = await response.json();
-          console.log(data); // Handle the response data as needed
+          console.log(data); 
         } catch (error) {
           console.error("Error adding coupon:", error);
         }
@@ -163,10 +157,10 @@ const UpdateCoupon = () => {
     </label>
 
       <button
-        onClick={addCoupon}
+        onClick={updateCoupon}
         className="bg-[#074FB2] text-white py-2 rounded-lg mt-3 hover:bg-blue-600"
       >
-        Add Coupon
+        Update Coupon
       </button>
     </form>
   </div>

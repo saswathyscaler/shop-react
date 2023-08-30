@@ -89,6 +89,8 @@ const ProductDetails = () => {
       console.error("Error removing from wishlist:", error);
     }
   };
+
+  
   
   return (
     <div>
