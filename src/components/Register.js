@@ -2,13 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-
 const Register = () => {
   const [input, setInput] = useState({
     name: "",
     email: "",
     password: "",
-    cpassword: "",
+    password_confirmation: "",
+    number:""
+
   });
 
   const handelChange = (e) => {
@@ -20,8 +21,8 @@ const Register = () => {
 
   const register = async (e) => {
     e.preventDefault();
-    const { name, email, number , password, password_confirmation } = input;
-    if (!name || !password || !email ||!number||  !password_confirmation) {
+    const { name, email, number, password, password_confirmation } = input;
+    if (!name || !password || !email || !number || !password_confirmation) {
       toast.warn("field missing", {
         position: "top-right",
         autoClose: 3000,
@@ -92,13 +93,18 @@ const Register = () => {
       return false;
     }
 
-
     const response = await fetch(`http://127.0.0.1:8000/api/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email,number, password, password_confirmation }),
+      body: JSON.stringify({
+        name,
+        email,
+        number,
+        password,
+        password_confirmation,
+      }),
     });
-    
+
     const data = await response.json();
     console.log("data", data);
     const { message, token } = data;
@@ -137,10 +143,10 @@ const Register = () => {
 
   return (
     <>
-   <div className="bg-gray-700 flex justify-center items-center min-h-screen">
-      <div className="bg-gray-100 p-3 border rounded-xl shadow-xl max-w-md w-full sm:w-10/12 md:w-8/12 lg:w-6/12">
-        <h2 className="text-3xl text-blue-700 font-bold text-center">
-          Register Yourself
+      <div className="bg-gray-700 flex justify-center items-center min-h-screen">
+        <div className="bg-gray-100 p-3 border rounded-xl shadow-xl max-w-md w-full sm:w-10/12 md:w-8/12 lg:w-6/12">
+          <h2 className="text-3xl text-blue-700 font-bold text-center">
+            Register Yourself
           </h2>
           <div className="flex flex-col md:flex-row">
             <div className="w-full px-5 mt-5">
@@ -164,22 +170,20 @@ const Register = () => {
                   name="email"
                   placeholder="Enter your email"
                   onChange={handelChange}
-                /> 
-                
-                
+                />
+
                 <label htmlFor="number" className="ml-2">
-                Phone-number
-              </label>
-              <input
-              type="tel" 
-              className="p-2 border rounded-lg appearance-none"
-              name="number"
-              placeholder="Enter your Number"
-              onChange={handelChange}
-              pattern="[0-9]{10}" 
-              title="Please enter a valid 10-digit phone number"
-              
-              />
+                  Phone-number
+                </label>
+                <input
+                  type="tel"
+                  className="p-2 border rounded-lg appearance-none"
+                  name="number"
+                  placeholder="Enter your Number"
+                  onChange={handelChange}
+                  pattern="[0-9]{10}"
+                  title="Please enter a valid 10-digit phone number"
+                />
 
                 <label htmlFor="password" className="ml-2">
                   Password
@@ -193,7 +197,7 @@ const Register = () => {
                 />
                 <p className="text-xs mb-2">
                   {" "}
-                  <i>!</i> Passwords must be at least   8 characters. and there
+                  <i>!</i> Passwords must be at least 8 characters. and there
                   should one uppercase one numeric and a special character
                 </p>
 

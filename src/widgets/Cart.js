@@ -94,39 +94,42 @@ const Cart = () => {
           },
         }
       );
-  
+
       if (response.ok) {
         const data = await response.json();
         const coupon = data.coupon;
-        console.log("Coupon Clicked:", coupon);
-  
-        if (coupon.min_order < calculateTotal()) {
-          let discountedTotal = calculateTotal();
+        if (coupon.is_active) {
+          console.log("Coupon Clicked:", coupon);
 
-          if (coupon.type === "percentage") {
-            const discountAmount = (coupon.value / 100) * calculateTotal();
-            discountedTotal -= discountAmount;
-            console.log("Discounted Total (Percentage):", discountedTotal);
+          if (coupon.min_order < calculateTotal()) {
+            let discountedTotal = calculateTotal();
+
+            if (coupon.type === "percentage") {
+              const discountAmount = (coupon.value / 100) * calculateTotal();
+              discountedTotal -= discountAmount;
+              console.log("Discounted Total (Percentage):", discountedTotal);
+            } else {
+              discountedTotal -= coupon.value;
+              console.log("Discounted Total (Fixed):", discountedTotal);
+            }
+            localStorage.setItem("cartTotal", discountedTotal);
+            setCouponApplied(true);
+
+            toast.success("Coupon added");
           } else {
-            discountedTotal -= coupon.value;
-            console.log("Discounted Total (Fixed):", discountedTotal);
+            toast.warn("You are not eligible for this coupon");
           }
-          localStorage.setItem("cartTotal", discountedTotal);
-          setCouponApplied(true);
-
-          toast.success("Coupon added");
-        } else {
-          toast.warn("You are not eligible for this coupon");
+        }else{
+          toast("this token is available")
         }
       } else {
         console.error("Error fetching coupon details:", response.statusText);
-        toast.error('some error occure')
+        toast.error("some error occure");
       }
     } catch (error) {
       console.error("Error fetching coupon details:", error);
     }
   };
-
 
   return (
     <div>
@@ -136,10 +139,7 @@ const Cart = () => {
         ) : (
           <ul className="grid grid-cols-6 m-4">
             {products.map((product) => (
-              <li
-                key={product.id}
-                className="grid grid-cols-6 gap-4 p-4 "
-              >
+              <li key={product.id} className="grid grid-cols-6 gap-4 p-4 ">
                 <div className="col-span-4">
                   <img
                     src={`http://localhost:8000/storage/${product.product?.image}`}
@@ -165,7 +165,10 @@ const Cart = () => {
             ))}
 
             <div className="col-span-6 text-right font-bold">
-            Total: ₹{couponApplied ? localStorage.getItem("cartTotal") : calculateTotal()}
+              Total: ₹
+              {couponApplied
+                ? localStorage.getItem("cartTotal")
+                : calculateTotal()}
             </div>
           </ul>
         )}
