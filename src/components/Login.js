@@ -14,6 +14,10 @@ const Login = () => {
 
 
 
+
+
+
+
   const [showPassword] = useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -33,12 +37,7 @@ const Login = () => {
       toast.warn("field missing", {
         position: "top-right",
         autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
+    
       });
       return false;
     }
@@ -47,19 +46,14 @@ const Login = () => {
       toast.error("Invalid email address", {
         position: "top-right",
         autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
+    
       });
       return false;
     }
 
     const response = await fetch(`http://127.0.0.1:8000/api/login`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type" : "application/json" },
       body: JSON.stringify({ email, password }),
     });
     let data = await response.json();
@@ -72,12 +66,7 @@ const Login = () => {
       toast.error("invalid credentials", {
         position: "top-right",
         autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
+     
       });
       return false;
     }
@@ -85,23 +74,13 @@ const Login = () => {
       toast.error("server error in login", {
         position: "top-right",
         autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
+       
       });
     } else {
       toast.success("login successfully", {
         position: "top-right",
         autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
+     
       });
 
       localStorage.setItem("token", token);
@@ -119,6 +98,7 @@ const Login = () => {
   const nav = () => {
     navigate("/register");
   };
+
   const responseGoogle=(data)=>{
     console.log( "Google Login Data:", data);
     console.log(data.profileObj);
@@ -126,7 +106,34 @@ const Login = () => {
 
     navigate("/"); 
   }
- 
+  const responseGoogle2 = async (response) => {
+    try {
+        const { tokenId } = response;
+
+        const backendResponse = await fetch('http://localhost:8000/api/login-google', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token: tokenId }),
+        });
+
+        const data = await backendResponse.json();
+
+        if (backendResponse.status === 200) {
+            console.log('Logged in with Google:', data);
+        } else {
+            console.log('Google login error:', data);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+};
+
+
+
+
+
+
+
   return (
     <>
       <div className="bg-gray-700 flex justify-center items-center min-h-screen">
@@ -134,6 +141,9 @@ const Login = () => {
           <h1 className="text-3xl text-blue-700 font-bold text-center">
             Login Here
           </h1>
+
+          
+
           <div className="flex flex-col md:flex-row">
             <div className="w-full  px-5 mt-5">
               <form className="flex flex-col gap-1">
@@ -179,7 +189,7 @@ const Login = () => {
               scope="openid profile email"
               discoveryDocs="claims_supported"
               access_type="offline"
-              onResolve={responseGoogle}
+              onResolve={responseGoogle2}
 
               
               

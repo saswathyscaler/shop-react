@@ -27,6 +27,9 @@ import Profile from "./components/Profile";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import Allusers from "./components/admin/Allusers";
 import WishList from "./widgets/WishList";
+import AddCoupon from "./components/admin/AddCoupon";
+import AllCoupons from "./components/admin/AllCoupons";
+import UpdateCoupon from "./components/admin/UpdateCoupon";
 
 function App() {
   return (
@@ -47,6 +50,8 @@ function App() {
             <Route element={<PaymentPage />} path="/paymentpage" exact></Route>
             <Route element={<WishList />} path="/wishlist" exact></Route>
           </Route>
+
+
           //ADMIN DASBOARD
           <Route element={<AdminRoutes />}>
             <Route
@@ -60,8 +65,13 @@ function App() {
             <Route exact path="/allorders" element={<AllOrders />} />
             <Route exact path="/allusers" element={<Allusers />} />
             <Route exact path="/edit/:id" element={<UpdateProduct />} />
-          </Route>
-        </Routes>
+            <Route exact path="/coupon/edit/:id" element={<UpdateCoupon />} />
+            
+            
+            <Route exact path="/allcoupons" element={<AllCoupons />} />
+            <Route exact path="/addcoupons" element={<AddCoupon />} />
+            </Route>
+            </Routes>
         <Footer />
 
         <ToastContainer />
