@@ -1,22 +1,15 @@
-import React, { useState ,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { GoogleLogin } from "react-google-login";
 import { GoogleLoginButton } from "react-social-login-buttons";
 import { LoginSocialGoogle } from "reactjs-social-login";
 
-
 const Login = () => {
   const [login, setLogin] = useState({
     email: "",
     password: "",
   });
-
-
-
-
-
-
 
   const [showPassword] = useState(false);
   const handleChange = (e) => {
@@ -37,7 +30,6 @@ const Login = () => {
       toast.warn("field missing", {
         position: "top-right",
         autoClose: 3000,
-    
       });
       return false;
     }
@@ -46,14 +38,13 @@ const Login = () => {
       toast.error("Invalid email address", {
         position: "top-right",
         autoClose: 3000,
-    
       });
       return false;
     }
 
     const response = await fetch(`http://127.0.0.1:8000/api/login`, {
       method: "POST",
-      headers: { "Content-Type" : "application/json" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
     let data = await response.json();
@@ -66,21 +57,27 @@ const Login = () => {
       toast.error("invalid credentials", {
         position: "top-right",
         autoClose: 3000,
-     
       });
       return false;
     }
+
+    if (response.message === "You Are blocked contact us ....") {
+      toast.error("You Are blocked contact us ....", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      return false
+    }
+
     if (response.status >= 400 || !data) {
       toast.error("server error in login", {
         position: "top-right",
         autoClose: 3000,
-       
       });
     } else {
       toast.success("login successfully", {
         position: "top-right",
         autoClose: 3000,
-     
       });
 
       localStorage.setItem("token", token);
@@ -99,40 +96,37 @@ const Login = () => {
     navigate("/register");
   };
 
-  const responseGoogle=(data)=>{
-    console.log( "Google Login Data:", data);
+  const responseGoogle = (data) => {
+    console.log("Google Login Data:", data);
     console.log(data.profileObj);
     console.log(data.tokenId);
 
-    navigate("/"); 
-  }
+    navigate("/");
+  };
   const responseGoogle2 = async (response) => {
     try {
-        const { tokenId } = response;
+      const { tokenId } = response;
 
-        const backendResponse = await fetch('http://localhost:8000/api/login-google', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token: tokenId }),
-        });
-
-        const data = await backendResponse.json();
-
-        if (backendResponse.status === 200) {
-            console.log('Logged in with Google:', data);
-        } else {
-            console.log('Google login error:', data);
+      const backendResponse = await fetch(
+        "http://localhost:8000/api/login-google",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token: tokenId }),
         }
+      );
+
+      const data = await backendResponse.json();
+
+      if (backendResponse.status === 200) {
+        console.log("Logged in with Google:", data);
+      } else {
+        console.log("Google login error:", data);
+      }
     } catch (error) {
-        console.error('Error:', error);
+      console.error("Error:", error);
     }
-};
-
-
-
-
-
-
+  };
 
   return (
     <>
@@ -141,8 +135,6 @@ const Login = () => {
           <h1 className="text-3xl text-blue-700 font-bold text-center">
             Login Here
           </h1>
-
-          
 
           <div className="flex flex-col md:flex-row">
             <div className="w-full  px-5 mt-5">
@@ -185,23 +177,17 @@ const Login = () => {
               </form>
 
               <LoginSocialGoogle
-              client_id="486752836406-o9gefd6913es58qdekf76bk4srvea82o.apps.googleusercontent.com"
-              scope="openid profile email"
-              discoveryDocs="claims_supported"
-              access_type="offline"
-              onResolve={responseGoogle2}
-
-              
-              
-              
-              
-              
-              onReject={(err) => {
-                console.log(err);
-              }}
-            >
-              <GoogleLoginButton />
-            </LoginSocialGoogle>
+                client_id="486752836406-o9gefd6913es58qdekf76bk4srvea82o.apps.googleusercontent.com"
+                scope="openid profile email"
+                discoveryDocs="claims_supported"
+                access_type="offline"
+                onResolve={responseGoogle2}
+                onReject={(err) => {
+                  console.log(err);
+                }}
+              >
+                <GoogleLoginButton />
+              </LoginSocialGoogle>
 
               <div className="flex justify-center items-center gap-4 mt-4">
                 <p className="text-[#074FB2] text-base">
