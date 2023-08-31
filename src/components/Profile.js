@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BiLogOut } from "react-icons/bi";
 import { toast } from "react-toastify";
 
 const Profile = () => {
@@ -9,7 +8,7 @@ const Profile = () => {
     email: "",
   });
 
-  const [profileOpen, setProfileOpen] = useState(true); 
+  const [profileOpen, setProfileOpen] = useState(true);
 
   const id = localStorage.getItem("id");
   const token = localStorage.getItem("token");
@@ -51,18 +50,15 @@ const Profile = () => {
 
   const msg = localStorage.getItem("message");
 
-  const logout = () => {
-    localStorage.clear();
-    navigate("/");
-  };
+
 
   const handleDashboardClick = () => {
-    setProfileOpen(false); 
+    setProfileOpen(false);
     navigate("/admindashboard");
   };
 
   const handleWishlistClick = () => {
-    setProfileOpen(false); 
+    setProfileOpen(false);
     navigate("/wishlist");
   };
 
@@ -95,6 +91,7 @@ const Profile = () => {
         >
           WishList
         </button>
+        
       </div>
     </div>
   );

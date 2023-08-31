@@ -140,7 +140,7 @@ const PaymentPage = () => {
               value={formData.alternateNumber}
               onChange={handleInputChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500"
-              maxLength={10} // Corrected attribute name
+              maxLength={10} 
             />
           </div>
           <div className="mb-4">

@@ -8,9 +8,9 @@ const Register = () => {
     email: "",
     password: "",
     password_confirmation: "",
-    number:""
-
+    number: "",
   });
+  const navigate = useNavigate();
 
   const handelChange = (e) => {
     const { name, value } = e.target;
@@ -21,121 +21,101 @@ const Register = () => {
 
   const register = async (e) => {
     e.preventDefault();
-    const { name, email, number, password, password_confirmation } = input;
-    if (!name || !password || !email || !number || !password_confirmation) {
-      toast.warn("field missing", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      return false;
-    }
-    if (!/^\S+@\S+\.\S+$/.test(email)) {
-      toast.error("Invalid email address", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      return false;
-    }
-    if (password !== password_confirmation) {
-      toast.error("password mismatch", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      return false;
-    }
-    if (password.length < 8) {
-      toast.error("password must be 8 character long", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      return false;
-    }
-    const passwordRegex = /(?=.*[A-Z])(?=.*[@#$%^&*!])(?=.*\d)/;
-
-    if (!passwordRegex.test(password)) {
-      toast.error(
-        "Password must contain at least one uppercase letter, one special character, and one numeric character",
-        {
+    try {
+      const { name, email, number, password, password_confirmation } = input;
+      if (!name || !password || !email || !number || !password_confirmation) {
+        toast.warn("field missing", {
           position: "top-right",
           autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+
           theme: "colored",
+        });
+        return false;
+      }
+      if (!/^\S+@\S+\.\S+$/.test(email)) {
+        toast.error("Invalid email address", {
+          position: "top-right",
+          autoClose: 3000,
+
+          theme: "colored",
+        });
+        return false;
+      }
+      if (password !== password_confirmation) {
+        toast.error("password mismatch", {
+          position: "top-right",
+          autoClose: 3000,
+
+          theme: "colored",
+        });
+        return false;
+      }
+      if (password.length < 8) {
+        toast.error("password must be 8 character long", {
+          position: "top-right",
+          autoClose: 3000,
+
+          theme: "colored",
+        });
+        return false;
+      }
+      const passwordRegex = /(?=.*[A-Z])(?=.*[@#$%^&*!])(?=.*\d)/;
+
+      if (!passwordRegex.test(password)) {
+        toast.error(
+          "Password must contain at least one uppercase letter, one special character, and one numeric character",
+          {
+            position: "top-right",
+            autoClose: 3000,
+
+            theme: "colored",
+          }
+        );
+        return false;
+      }
+
+      const response = await fetch(`http://127.0.0.1:8000/api/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          number,
+          password,
+          password_confirmation,
+        }),
+      });
+      console.log(response);
+
+      if (!response.ok) {
+        console.log("some error");
+      } else {
+        const data = response;
+        console.log("data", data);
+        const { message, token } = data;
+        if (response.status >= 400 || !data) {
+          toast.error("some error occur", {
+            position: "top-right",
+            autoClose: 3000,
+
+            theme: "colored",
+          });
+          return false;
+        } else {
+          toast.success("User register successfully", {
+            position: "top-right",
+            autoClose: 3000,
+
+            theme: "colored",
+          });
+          localStorage.setItem("token", token);
+          navigate("/");
         }
-      );
-      return false;
-    }
-
-    const response = await fetch(`http://127.0.0.1:8000/api/register`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        email,
-        number,
-        password,
-        password_confirmation,
-      }),
-    });
-
-    const data = await response.json();
-    console.log("data", data);
-    const { message, token } = data;
-    if (response.status >= 400 || !data) {
-      toast.error("some error occur", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      return false;
-    } else {
-      toast.success("User register successfully", {
-        position: "top-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "colored",
-      });
-      localStorage.setItem("token", token);
-      nav("/");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
-  const navigate = useNavigate();
 
   const nav = () => {
     navigate("/login");
