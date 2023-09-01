@@ -4,11 +4,19 @@ import { CgProfile } from "react-icons/cg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/logo.png";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Profile from "./Profile";
 
 const Navbar = () => {
+
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const login = location.pathname === "/login";
+  const register = location.pathname === "/register";
+
+ 
+
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("token") ? true : false
   );
@@ -27,7 +35,9 @@ const Navbar = () => {
     setIsLoggedIn(false);
     navigate("/");
   };
-
+  if ( login || register) {
+    return null;
+  }
   return (
     <nav className="bg-blue-500 p-4 flex justify-between items-center">
       <div className="flex items-center">
