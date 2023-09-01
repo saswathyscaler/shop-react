@@ -11,6 +11,7 @@ const PaymentPage = () => {
     alternateNumber: "",
     address: "",
   });
+  const userId = localStorage.getItem("id")
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const productIds = queryParams.get("productIds");
@@ -72,6 +73,7 @@ const PaymentPage = () => {
                 }
               );
 
+
               if (res.ok) {
                 console.log("Form data saved successfully");
                 navigate("/orderSuccess");
@@ -80,6 +82,25 @@ const PaymentPage = () => {
               }
             } catch (error) {
               console.error("Error saving form data:", error);
+            }
+            try {
+              const res = await fetch(
+                "http://localhost:8000/api/order",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                  },
+                  body: JSON.stringify({
+                    user_id:userId,
+                    product_id: productIds.split(","),
+                    
+                  }),
+                }
+              );
+            } catch (error) {
+              
             }
             navigate("/orderSuccess");
               try {
