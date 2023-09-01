@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AddCoupon = () => {
   const [couponData, setCouponData] = useState({
@@ -9,6 +10,7 @@ const AddCoupon = () => {
     type: "percentage",
     is_active: true,
   });
+  const navigate = useNavigate()
 const token = localStorage.getItem('token')
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -125,6 +127,9 @@ const token = localStorage.getItem('token')
           Add Coupon
         </button>
       </form>
+      <button onClick={()=>navigate('/admindashboard')} className='px-4 py-2 bg-blue-300 rounded-lg'>
+      admindashboard
+      </button>
     </div>
   );
 };

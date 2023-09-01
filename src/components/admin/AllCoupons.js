@@ -51,6 +51,9 @@ const navigate = useNavigate()
           </li>
         ))}
       </ul>
+      <button onClick={()=>navigate('/admindashboard')} className='px-4 py-2 my-6 bg-blue-300 rounded-lg'>
+      Dshboard
+      </button>
     </div>
   );
 };

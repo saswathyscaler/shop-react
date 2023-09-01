@@ -84,6 +84,59 @@ const Rating = ({ productId }) => {
       toast.warn("Please select a rating before submitting");
     }
   };
+  const renderAverageRatingStars = () => {
+    if (averageRating !== null) {
+      const totalRatingsCount = ratings.length; // Get the total number of ratings
+      return (
+        <div className="mt-4">
+          <h3 className="font-bold text-blue-300">Average Rating:</h3>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <RatingUI
+              name="average-rating"
+              value={averageRating}
+              precision={0.1}
+              readOnly
+              emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
+            />
+            <p className="ml-2">
+          {averageRating.toFixed(2)}     ({totalRatingsCount} Users)
+            </p>
+          </Box>
+        </div>
+      );
+    }
+    return null;
+  };
+  const renderIndividualUserRatings = () => {
+    return (
+      <div>
+        <h3 className="font-bold text-blue-300 mt-4">All Ratings:</h3>
+        <ul>
+          {ratings.map((rating) => (
+            <li
+              key={rating.id}
+              className="bg-slate-100 px-5 py-3 mb-3 rounded-lg shadow-md"
+            >
+              <h2 className="text-lg font-semibold mb-2">{rating?.user_name}</h2>
+              <p className="mb-1">
+                Rating:{" "}
+                <RatingUI
+                  name={`user-rating-${rating.id}`}
+                  value={rating?.rating}
+                  precision={0.1}
+                  readOnly
+                  emptyIcon={
+                    <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
+                  }
+                />
+              </p>
+              <p className="mb-0">Review: {rating?.review}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
 
   return (
     <div className="mt-4">
@@ -124,23 +177,14 @@ const Rating = ({ productId }) => {
       {averageRating !== null && (
         <div className="mt-4">
           <h3 className="font-bold text-blue-300">Average Rating:</h3>
-          <p>Average Rating: {averageRating.toFixed(2)}</p>
+          {renderAverageRatingStars()}
+
         </div>
       )}
       <h3 className="font-bold text-blue-300 mt-4">All Ratings:</h3>
       <div>
-        <ul>
-          {ratings.map((rating) => (
-            <li
-              key={rating.id}
-              className="bg-slate-100 px-5 py-3 mb-3 rounded-lg shadow-md"
-            >
-              <h2 className="text-lg font-semibold mb-2">{rating?.user_name}</h2>
-              <p className="mb-1">Rating: {rating?.rating}</p>
-              <p className="mb-0">Review: {rating?.review}</p>
-            </li>
-          ))}
-        </ul>
+      {renderIndividualUserRatings()}
+
       </div>
     </div>
   );

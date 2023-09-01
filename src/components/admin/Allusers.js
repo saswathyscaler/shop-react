@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import userLogo from "../../assets/user.png"
+import { useNavigate } from 'react-router-dom';
 const Allusers = () => {
   const [users, setUsers] = useState([]);
-
+const navigate = useNavigate()
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -70,6 +71,9 @@ const Allusers = () => {
           </li>
         ))}
       </ul>
+      <button onClick={()=>navigate('/admindashboard')} className='px-4 py-2 bg-blue-300 rounded-lg'>
+      Dshboard
+      </button>
     </div>
   );
 };
