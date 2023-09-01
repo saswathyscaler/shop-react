@@ -85,10 +85,6 @@ const Cart = () => {
 
   const isCartEmpty = calculateTotal() === 0;
 
-
-
-
-
   const handleCoupon = async (couponId) => {
     try {
       const response = await fetch(
@@ -108,10 +104,7 @@ const Cart = () => {
           setCouponApplied(false);
           localStorage.setItem("cartTotal", calculateTotal());
           toast.info("Coupon removed");
-}
-
-
-       else if (coupon.is_active) {
+        } else if (coupon.is_active) {
           console.log("Coupon Clicked:", coupon);
 
           if (coupon.min_order < calculateTotal()) {
@@ -133,8 +126,8 @@ const Cart = () => {
           } else {
             toast.warn("You are not eligible for this coupon");
           }
-        }else{
-          toast("this token is not available")
+        } else {
+          toast("this token is not available");
         }
       } else {
         console.error("Error fetching coupon details:", response.statusText);
@@ -145,19 +138,25 @@ const Cart = () => {
     }
   };
 
+  const handlePlaceOrder = () => {
+    const productIds = products.map(product => product.id);
+    
+    navigate(`/paymentpage?productIds=${productIds.join(',')}`);
+  };
+
   return (
     <div>
       <div>
         {products.length === 0 ? (
           <h1>Your cart is empty.</h1>
         ) : (
-          <ul className="grid grid-cols-6 m-4">
+          <ul className="grid grid-cols-1 md:grid-cols-6 m-4">
             {products.map((product) => (
-              <li key={product.id} className="grid grid-cols-6 gap-4 p-4 ">
+              <li key={product.id} className="grid grid-cols-1 md:grid-cols-6 gap-4 p-4 ">
                 <div className="col-span-4">
                   <img
                     src={`http://localhost:8000/storage/${product.product?.image}`}
-                    className="w-20 h-16 object-cover rounded"
+                    className="w-26 h-20 object-cover rounded"
                     alt="Product"
                   />
                 </div>
@@ -188,7 +187,7 @@ const Cart = () => {
         )}
       </div>
       <button
-        onClick={() => navigate("/paymentpage")}
+        onClick={handlePlaceOrder}
         className={`flex items-center bg-[#ff9f00] p-2 md:p-4 border rounded-md mx-2 ${
           isCartEmpty ? "cursor-not-allowed opacity-50" : ""
         }`}
