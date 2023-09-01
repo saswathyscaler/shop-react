@@ -30,6 +30,8 @@ import WishList from "./widgets/WishList";
 import AddCoupon from "./components/admin/AddCoupon";
 import AllCoupons from "./components/admin/AllCoupons";
 import UpdateCoupon from "./components/admin/UpdateCoupon";
+import ShowAllOrder from "./components/admin/ShowAllOrder";
+import ShowOrdersUser from "./widgets/ShowOrdersUser";
 
 function App() {
   return (
@@ -63,9 +65,12 @@ function App() {
             <Route element={<Dashboard />} path="/dashboard" exact></Route>
             <Route exact path="/addproduct" element={<AddProduct />} />
             <Route exact path="/allorders" element={<AllOrders />} />
+            <Route exact path="/showallorders" element={<ShowAllOrder />} />
+
             <Route exact path="/allusers" element={<Allusers />} />
             <Route exact path="/edit/:id" element={<UpdateProduct />} />
             <Route exact path="/coupon/edit/:id" element={<UpdateCoupon />} />
+            <Route exact path="/showorderuser" element={<ShowOrdersUser />} />
             
             
             <Route exact path="/allcoupons" element={<AllCoupons />} />
