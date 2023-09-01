@@ -50,8 +50,6 @@ const Profile = () => {
 
   const msg = localStorage.getItem("message");
 
-
-
   const handleDashboardClick = () => {
     setProfileOpen(false);
     navigate("/admindashboard");
@@ -63,37 +61,39 @@ const Profile = () => {
   };
 
   return (
-    <div
-      className={`bg-white absolute right-0 top-16 border rounded-xl w-52  h-auto mx-5 flex z-10  justify-center ${
-        profileOpen ? "" : "hidden"
-      }`}
-    >
-      <div className="flex flex-col items-center gap-2 m-2">
-        <div className="text-center">
-          <h3>{user.name}</h3>
-          <p className="font-normal text-sm text-[#074FB2]">{user.email}</p>
-        </div>
-        <div>
-          {msg === "Logged in as admin" && (
-            <div className="space-x-4 ">
-              <button
-                onClick={handleDashboardClick}
-                className="cursor-pointer bg-blue-100 hover:bg-slate-300 px-4 py-2 border rounded-lg"
-              >
-                DashBoard
-              </button>
-            </div>
-          )}
-        </div>
-        <button
-          className="cursor-pointer bg-blue-100 hover:bg-slate-300 px-4 py-2 border rounded-lg"
-          onClick={handleWishlistClick}
-        >
-          WishList
-        </button>
-        
+    <div className={`bg-white absolute right-0 top-16 border rounded-xl w-52 h-auto mx-5 flex z-10 justify-center ${profileOpen ? "" : "hidden"}`} style={{ boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)" }}>
+    <div className="flex flex-col items-center gap-2 m-2">
+      <div className="text-center">
+        <h3 className="text-xl font-semibold">{user.name}</h3>
+        <p className="font-normal text-sm text-[#074FB2]">{user.email}</p>
       </div>
+      <div>
+        {msg === "Logged in as admin" && (
+          <div             
+          >
+            <button
+              onClick={handleDashboardClick}
+              className="cursor-pointer bg-blue-100 hover:bg-slate-300 px-4 py-2 border rounded-lg transition duration-300 ease-in-out transform hover:scale-105 w-full"
+              >
+              Dashboard
+            </button>
+          </div>
+        )}
+      </div>
+      <button
+        className="cursor-pointer bg-blue-100 hover:bg-slate-300 px-4 py-2 border rounded-lg transition duration-300 ease-in-out transform hover:scale-105 w-full"
+        onClick={handleWishlistClick}
+      >
+        Wishlist
+      </button>
+      <button
+        className="cursor-pointer bg-blue-100 hover:bg-slate-300 px-4 py-2 border rounded-lg transition duration-300 ease-in-out transform hover:scale-105 w-full"
+        onClick={() => { navigate("/showorderuser"); setProfileOpen(false) }}
+      >
+        My Orders
+      </button>
     </div>
+  </div>
   );
 };
 

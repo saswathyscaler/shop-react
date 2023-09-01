@@ -14,6 +14,12 @@ const AdminDashboard = () => {
           All Products
         </button>
         <button
+        onClick={() => navigate("/addproduct")}
+        className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+      >
+        Add Products
+      </button>
+        <button
           onClick={() => navigate("/allusers")}
           className="bg-violet-600 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
         >
@@ -26,6 +32,12 @@ const AdminDashboard = () => {
           All AllOrders
         </button>
         <button
+        onClick={() => navigate("/showallorders")}
+        className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+      >
+      Order confirm
+      </button>
+        <button
           onClick={() => navigate("/addcoupons")}
           className="bg-orange-400 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
         >
@@ -37,12 +49,7 @@ const AdminDashboard = () => {
         >
           All coupons
         </button>
-        <button
-          onClick={() => navigate("/addproduct")}
-          className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
-        >
-          Add Products
-        </button>
+       
       </div>
     </>
   );

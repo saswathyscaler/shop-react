@@ -29,14 +29,14 @@ const ShowOrdersUser = () => {
             item && (
               <div className="bg-white shadow-md p-4 rounded-lg mb-4">
                 <li key={item.id}>
-                  <strong className="font-bold">Order Date:</strong>{" "}
+                  <h1 className="font-thin">Order Date:
                   {item.order_date}
-                  <br />
-                  <strong className="font-bold">Order Status:</strong>{" "}
+                  </h1>
+                  <h1 className="font-thin">Order Status:{" "}
                   {item.order_status === "true"
                     ? "Delivered"
                     : "Ordered/Shipped"}
-                  <br />
+                  </h1>
                 </li>
                 <ProductDetails productId={item.product_id} />
               </div>
@@ -68,9 +68,8 @@ const ProductDetails = ({ productId }) => {
     <div className="mt-4 bg-gray-100 p-4 rounded-lg">
       {product && (
         <div>
-          <strong className="font-bold">Product Name:</strong> {product.name}
-          <br />
-          <strong className="font-bold">Price:</strong> {product.price}
+          <h1 className="font-thin">Product Name: {product.name}</h1>
+          <h1 className="font-thin">Price: {product.price}</h1> 
           <br />
         </div>
       )}

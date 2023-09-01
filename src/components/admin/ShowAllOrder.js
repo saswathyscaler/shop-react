@@ -14,11 +14,15 @@ const ShowAllOrder = () => {
       });
   }, []);
 
+  const handleOrder =async()=>{
+
+  };
   return (
     <div className="container mx-auto py-8">
       <h2 className="text-2xl font-bold mb-4">All Ordered Products</h2>
       <ul className="space-y-4">
-        {orderedProducts.map((product) => (
+      {orderedProducts.map((product) => (
+          <div>
           <li key={product.id} className="bg-white shadow-md p-4 rounded-lg">
             <div className="mb-2">
               <strong className="font-bold">Product ID:</strong>{" "}
@@ -38,8 +42,10 @@ const ShowAllOrder = () => {
               </div>
             </div>
             <ProductDetails productId={product.product_id} />
-          </li>
-        ))}
+            <button onClick={handleOrder}  className="px-4 py-2 bg-slate-400 rounded-sm">Send Order </button>
+            </li>
+            </div>
+            ))}
       </ul>
     </div>
   );
