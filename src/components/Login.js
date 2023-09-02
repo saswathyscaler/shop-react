@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { GoogleLoginButton } from "react-social-login-buttons";
-import { LoginSocialGoogle } from "reactjs-social-login";
+// import { GoogleLoginButton } from "react-social-login-buttons";
+// import { LoginSocialGoogle } from "reactjs-social-login";
 import log from "../assets/log.jpg"
 const Login = () => {
   const [login, setLogin] = useState({
@@ -171,18 +171,7 @@ const Login = () => {
                 </p>
               </form>
 
-              <LoginSocialGoogle
-                client_id="486752836406-o9gefd6913es58qdekf76bk4srvea82o.apps.googleusercontent.com"
-                scope="openid profile email"
-                discoveryDocs="claims_supported"
-                access_type="offline"
-                onResolve={responseGoogle2}
-                onReject={(err) => {
-                  console.log(err);
-                }}
-              >
-                <GoogleLoginButton />
-              </LoginSocialGoogle>
+             
 
               <div className="flex justify-center items-center gap-4 mt-4">
                 <p className="text-[#074FB2] text-base">
