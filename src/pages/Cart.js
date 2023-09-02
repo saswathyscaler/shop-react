@@ -11,7 +11,7 @@ const Cart = () => {
   const [appliedCoupon, setAppliedCoupon] = useState(null);
 
   const [coupons, setCoupons] = useState([]);
-  const { cart,setCart } = useCart();
+  const { cart, setCart } = useCart();
 
   useEffect(() => {
     fetchProducts();
@@ -30,7 +30,7 @@ const Cart = () => {
     }
   };
 
-  const removeFromCart = async (productId) => {
+  const removeFromCart = async (productId , quantity) => {
     try {
       const response = await fetch(
         `http://localhost:8000/api/cart/${productId}`,
@@ -41,8 +41,8 @@ const Cart = () => {
       );
 
       if (response.ok) {
-        setCart(cart - 1);
-    localStorage.setItem('cartCart',cart - 1)
+        setCart(cart - quantity); 
+        localStorage.setItem("cartCart", cart - quantity); 
         setProducts((prevProducts) =>
           prevProducts.filter((product) => product.id !== productId)
         );
@@ -143,9 +143,9 @@ const Cart = () => {
   };
 
   const handlePlaceOrder = () => {
-    const productIds = products.map(product => product.id);
-    
-    navigate(`/paymentpage?productIds=${productIds.join(',')}`);
+    const productIds = products.map((product) => product.id);
+
+    navigate(`/paymentpage?productIds=${productIds.join(",")}`);
   };
 
   return (
@@ -156,7 +156,10 @@ const Cart = () => {
         ) : (
           <ul className="grid grid-cols-1 md:grid-cols-6 m-4">
             {products.map((product) => (
-              <li key={product.id} className="grid grid-cols-1 md:grid-cols-6 gap-4 p-4 ">
+              <li
+                key={product.id}
+                className="grid grid-cols-1 md:grid-cols-6 gap-4 p-4 "
+              >
                 <div className="col-span-4">
                   <img
                     src={`http://localhost:8000/storage/${product.product?.image}`}
@@ -172,7 +175,7 @@ const Cart = () => {
                   </p>
                   <p className="text-gray-600">Quantity: {product.quantity}</p>
                   <button
-                    onClick={() => removeFromCart(product.id)}
+                    onClick={() => removeFromCart(product.id,product.quantity )}
                     className="mt-2 bg-red-500 text-white px-3 py-2 rounded"
                   >
                     Remove

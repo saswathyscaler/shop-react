@@ -41,7 +41,7 @@ const ProductDetails = () => {
     const data = await response.json();
     console.log("data", data);
     setCart(cart + 1);
-    localStorage.setItem('cartCart',cart + 1)
+    localStorage.setItem('cartCart',cart+1)
     console.log(cart)
     toast.success(`Added "${product?.name}" to cart`,{
       autoClose: 1000
