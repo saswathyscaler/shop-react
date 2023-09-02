@@ -11,7 +11,7 @@ const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [isHeartFilled, setIsHeartFilled] = useState(false);
-  const { addToCart } = useCart();
+  const { cart,setCart } = useCart();
 
   const navigate = useNavigate();
 
@@ -40,8 +40,12 @@ const ProductDetails = () => {
 
     const data = await response.json();
     console.log("data", data);
-    addToCart(1);
-    toast.success(`Added "${product?.name}" to cart`);
+    setCart(cart + 1);
+    localStorage.setItem('cartCart',cart + 1)
+    console.log(cart)
+    toast.success(`Added "${product?.name}" to cart`,{
+      autoClose: 1000
+    });
   };
 
   const toggleHeart = () => {

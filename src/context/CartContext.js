@@ -6,19 +6,16 @@ export function useCart() {
   return useContext(CartContext);
 }
 
-export function CartProvider({ children }) {
-  const [cart, setCart] = useState(0);
+export function CartProvider({ children }) { 
+  let cartFromLS=localStorage.getItem('cartCart') || 0
 
-  const addToCart = (quantity) => {
-    setCart((prevCart) => prevCart + quantity);
-  };
+  const [cart, setCart] = useState(cartFromLS);
 
-  const clearCart = () => {
-    setCart(0);
-  };
+ 
+
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, clearCart }}>
+    <CartContext.Provider value={{ cart, setCart }}>
       {children}
     </CartContext.Provider>
   );

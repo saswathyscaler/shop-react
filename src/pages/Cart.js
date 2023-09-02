@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useCart } from "../context/CartContext";
 
 const Cart = () => {
   const [products, setProducts] = useState([]);
@@ -10,6 +11,7 @@ const Cart = () => {
   const [appliedCoupon, setAppliedCoupon] = useState(null);
 
   const [coupons, setCoupons] = useState([]);
+  const { cart,setCart } = useCart();
 
   useEffect(() => {
     fetchProducts();
@@ -39,6 +41,8 @@ const Cart = () => {
       );
 
       if (response.ok) {
+        setCart(cart - 1);
+    localStorage.setItem('cartCart',cart - 1)
         setProducts((prevProducts) =>
           prevProducts.filter((product) => product.id !== productId)
         );
