@@ -50,17 +50,17 @@ const ShowAllOrder = () => {
           <div>
           <li key={product.id+product.product_id} className="bg-white shadow-md p-4 rounded-lg">
             <div className="mb-2">
-              <strong className="font-bold">Product ID:</strong>{" "}
+              <strong className="font-bold">Product ID:</strong>
               {product.product_id}
             </div>
             <div className="mb-2"></div>
             <div className="mb-2">
-              <strong className="font-bold">Order Date:</strong>{" "}
+              <strong className="font-bold">Order Date:</strong>
               {product.order_date}
             </div>
             <div className="mb-2">
               <div className="mb-2">
-                <strong className="font-bold">Order Status:</strong>{" "}
+                <strong className="font-bold">Order Status:</strong>
                 {product.order_status === "true"
                   ? "Delivered"
                   : "Ordered/Shipped"}

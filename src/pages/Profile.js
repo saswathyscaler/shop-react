@@ -63,7 +63,7 @@ const Profile = () => {
   return (
     <div className={`bg-white absolute right-0 top-16 border rounded-xl w-52 h-auto mx-5 flex z-10 justify-center ${profileOpen ? "" : "hidden"}`} style={{ boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)" }}>
     <div className="flex flex-col items-center gap-2 m-2">
-      <div className="text-center">
+      <div className="text-center mb-2">
         <h3 className="text-xl font-semibold">{user.name}</h3>
         <p className="font-normal text-sm text-[#074FB2]">{user.email}</p>
       </div>

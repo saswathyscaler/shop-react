@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/logo.png";
 import { useLocation, useNavigate } from "react-router-dom";
-import Profile from "./Profile";
+import Profile from "../pages/Profile";
 
 const Navbar = () => {
 
