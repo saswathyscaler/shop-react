@@ -32,10 +32,11 @@ import AllCoupons from "./components/admin/AllCoupons";
 import UpdateCoupon from "./components/admin/UpdateCoupon";
 import ShowAllOrder from "./components/admin/ShowAllOrder";
 import ShowOrdersUser from "./widgets/ShowOrdersUser";
-
+import { CartProvider } from "./context/CartContext"; 
 function App() {
   return (
     <Router>
+    <CartProvider>
     <Navbar />
       <>
         <Routes>
@@ -81,6 +82,7 @@ function App() {
 
         <ToastContainer />
       </>
+      </CartProvider>
     </Router>
   );
 }

@@ -4,11 +4,14 @@ import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Rating from "../utils/Rating";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
+import {  useCart } from "../context/CartContext"
+
 
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [isHeartFilled, setIsHeartFilled] = useState(false);
+  const { addToCart } = useCart();
 
   const navigate = useNavigate();
 
@@ -37,7 +40,7 @@ const ProductDetails = () => {
 
     const data = await response.json();
     console.log("data", data);
-
+    addToCart(1);
     toast.success(`Added "${product?.name}" to cart`);
   };
 

@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { toast } from "react-toastify";
 import { CgProfile } from "react-icons/cg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/logo.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import Profile from "../pages/Profile";
+
+import {useCart} from "../context/CartContext"
+
 
 const Navbar = () => {
 
@@ -21,6 +23,7 @@ const Navbar = () => {
     localStorage.getItem("token") ? true : false
   );
   const [showProfile, setShowProfile] = useState(false);
+  const { cart } = useCart();
   const toggleProfile = () => {
     setShowProfile(!showProfile);
   };
@@ -58,7 +61,7 @@ const Navbar = () => {
             className="text-white text-lg cursor-pointer"
           />
           <span className="absolute top-0 left-2 bg-red-500 rounded-full text-white px-1 text-xs">
-            3+
+          {cart} 
           </span>
         </div>
 
