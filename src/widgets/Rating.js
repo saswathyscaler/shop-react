@@ -38,9 +38,9 @@ const Rating = ({ productId }) => {
         `http://localhost:8000/api/ratings/${productId}`
       );
       const data = await response.json();
-      console.log(data);
       setRatings(data.ratings);
-      console.log(ratings);
+      // console.log(ratings);
+      // console.log(data);
 
       const totalRating = data.ratings.reduce(
         (total, rating) => total + rating.rating,

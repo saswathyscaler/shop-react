@@ -1,22 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useCart } from "../context/CartContext";
+import { useDispatch, useSelector } from "react-redux";
+
+import { clearCart, removeItem } from "../utils/cartSlice";
 
 const Cart = () => {
+  const cartItems = useSelector((store) => store.cart.items);
+  console.log(cartItems)
+  const dispatch = useDispatch();
+
   const [products, setProducts] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [couponApplied, setCouponApplied] = useState(false);
   const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const [coupons, setCoupons] = useState([]);
-  const { cart, setCart } = useCart();
 
   useEffect(() => {
     fetchProducts();
   }, []);
-
   const fetchProducts = async () => {
     try {
       const response = await fetch(`http://localhost:8000/api/cart`, {
@@ -24,13 +29,14 @@ const Cart = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
+      console.log("Fetched cart items:", data);
       setProducts(data);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
   };
 
-  const removeFromCart = async (productId , quantity) => {
+  const removeFromCart = async (productId, quantity) => {
     try {
       const response = await fetch(
         `http://localhost:8000/api/cart/${productId}`,
@@ -39,17 +45,41 @@ const Cart = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
+  
       if (response.ok) {
-        setCart(cart - quantity); 
-        localStorage.setItem("cartCart", cart - quantity); 
+        console.log(response)
         setProducts((prevProducts) =>
-          prevProducts.filter((product) => product.id !== productId)
+        prevProducts.filter((product) => product.id !== productId)
         );
+        dispatch(removeItem(productId)); 
+      } else {
+        console.error("Error removing product:", response.statusText);
       }
     } catch (error) {
       console.error("Error removing product:", error);
     }
+  };
+  
+
+  const removeAll = () => {
+    fetch("http://localhost:8000/api/cart", {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Cart cleared successfully");
+          dispatch(clearCart());
+          
+        } else {
+          console.error("Error clearing cart:", response.statusText);
+        }
+      })
+      .catch((error) => {
+        console.error("Error clearing cart:", error);
+      });
   };
 
   useEffect(() => {
@@ -66,7 +96,6 @@ const Cart = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
         setCoupons(data.coupons);
       } else {
         console.error("Error fetching coupons:", response.statusText);
@@ -151,7 +180,9 @@ const Cart = () => {
   return (
     <div>
       <div>
-        {products.length === 0 ? (
+        {loading ? (
+          <h1>Loading...</h1>
+        ) : products.length === 0 ? (
           <h1>Your cart is empty.</h1>
         ) : (
           <ul className="grid grid-cols-1 md:grid-cols-6 m-4">
@@ -175,7 +206,7 @@ const Cart = () => {
                   </p>
                   <p className="text-gray-600">Quantity: {product.quantity}</p>
                   <button
-                    onClick={() => removeFromCart(product.id,product.quantity )}
+                    onClick={() => removeFromCart(product.id, product.quantity)}
                     className="mt-2 bg-red-500 text-white px-3 py-2 rounded"
                   >
                     Remove
@@ -193,16 +224,27 @@ const Cart = () => {
           </ul>
         )}
       </div>
-      <button
-        onClick={handlePlaceOrder}
-        className={`flex items-center bg-[#ff9f00] p-2 md:p-4 border rounded-md mx-2 ${
-          isCartEmpty ? "cursor-not-allowed opacity-50" : ""
-        }`}
-        disabled={isCartEmpty}
-      >
-        Place order
-      </button>
+      <div className="flex justify-between">
+        <button
+          onClick={handlePlaceOrder}
+          className={`flex items-center bg-[#ff9f00] p-2 md:p-4 border rounded-md mx-2 ${
+            isCartEmpty ? "cursor-not-allowed opacity-50" : ""
+          }`}
+          disabled={isCartEmpty}
+        >
+          Place order
+        </button>
 
+        <button
+          onClick={() => removeAll()}
+          className={`flex items-center bg-red-500 p-2 md:p-4 border rounded-md mx-2 ${
+            isCartEmpty ? "cursor-not-allowed opacity-50" : ""
+          }`}
+          disabled={isCartEmpty}
+        >
+          Clear Cart
+        </button>
+      </div>
       <div className="w-full">
         <h1 className="text-xl font-semibold mb-4">Use Coupons:</h1>
         <div className="grid grid-cols-4 gap-4">

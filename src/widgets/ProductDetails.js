@@ -4,48 +4,58 @@ import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Rating from "../widgets/Rating";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import {  useCart } from "../context/CartContext"
-
+// import {  useCart } from "../context/CartContext"
+import { addItem } from "../utils/cartSlice";
+import { useDispatch } from "react-redux";
+import { clearCart } from "../utils/cartSlice";
 
 const ProductDetails = () => {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
   const [isHeartFilled, setIsHeartFilled] = useState(false);
-  const { cart,setCart } = useCart();
+  // const { cart,setCart } = useCart();
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    console.log("Fetching product details...");
+    // console.log("Fetching product details...");
     fetch(`http://127.0.0.1:8000/api/products/${productId}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("Fetched product data:", data);
+        // console.log("Fetched product data:", data);
         setProduct(data.product);
       })
       .catch((error) => console.error("Error fetching product:", error));
   }, [productId]);
 
   const handleCart = async () => {
-    const response = await fetch(
-      `http://localhost:8000/api/cart/add/${productId}`,
-      {
-        method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: JSON.stringify(),
-      }
-    );
+    try {
+      const response = await fetch(
+        `http://localhost:8000/api/cart/add/${productId}`,
+        {
+          method: "POST",
+          headers: { Authorization: `Bearer ${token}` },
+          body: JSON.stringify(),
+        }
+      );
+      console.log(response);
+      if (response.ok) {
+        const data = await response.json();
+        dispatch(addItem(product));
 
-    const data = await response.json();
-    console.log("data", data);
-    setCart(cart + 1);
-    localStorage.setItem('cartCart',cart+1)
-    console.log(cart)
-    toast.success(`Added "${product?.name}" to cart`,{
-      autoClose: 1000
-    });
+        toast.success(`Added "${product?.name}" to cart`, {
+          autoClose: 1000,
+        });
+      } else {
+        // Handle error response from the server
+        toast.error("Failed to add the product to the cart");
+      }
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
   };
 
   const toggleHeart = () => {
@@ -55,7 +65,6 @@ const ProductDetails = () => {
   const handleBuy = () => {
     navigate("/userdetail");
   };
-
 
   const addWishlist = async () => {
     const response = await fetch(
@@ -76,7 +85,7 @@ const ProductDetails = () => {
   const removeWishlist = async () => {
     try {
       const response = await fetch(
-        `http://localhost:8000/api/wishlist/remove/${productId}`,  
+        `http://localhost:8000/api/wishlist/remove/${productId}`,
         {
           method: "DELETE",
           headers: { Authorization: `Bearer ${token}` },
@@ -87,7 +96,7 @@ const ProductDetails = () => {
       console.log("data", data);
 
       if (response.ok) {
-        setIsHeartFilled(false);  
+        setIsHeartFilled(false);
         toast.success(`${product?.name} removed from wishlist`);
       } else {
         toast.error("Failed to remove from wishlist");
@@ -97,8 +106,6 @@ const ProductDetails = () => {
     }
   };
 
-  
-  
   return (
     <div>
       <div className="p-2 min-h-screen">
@@ -137,11 +144,7 @@ const ProductDetails = () => {
                 {isHeartFilled ? (
                   <AiFillHeart onClick={removeWishlist} className="text-4xl " />
                 ) : (
-                  <AiOutlineHeart
-                    
-                    onClick={addWishlist}
-                    className="text-4xl "
-                  />
+                  <AiOutlineHeart onClick={addWishlist} className="text-4xl " />
                 )}
               </div>
             </div>

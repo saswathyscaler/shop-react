@@ -6,7 +6,10 @@ import logo from "../assets/logo.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import Profile from "../pages/Profile";
 
-import {useCart} from "../context/CartContext"
+// import {useCart} from "../context/CartContext"
+
+import { useSelector } from "react-redux";
+// import store from "../utils/store";
 
 
 const Navbar = () => {
@@ -17,13 +20,14 @@ const Navbar = () => {
   const login = location.pathname === "/login";
   const register = location.pathname === "/register";
 
- 
+  const cartItems = useSelector((store) => store.cart.items);
+
 
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem("token") ? true : false
   );
   const [showProfile, setShowProfile] = useState(false);
-  const { cart } = useCart();
+  // const { cart } = useCart();
   const toggleProfile = () => {
     setShowProfile(!showProfile);
   };
@@ -58,10 +62,10 @@ const Navbar = () => {
         >
           <FontAwesomeIcon
             icon={faShoppingCart}
-            className="text-white text-lg cursor-pointer"
+            className="text-white text-lg cursor-pointer mt-3"
           />
-          <span className="absolute top-0 left-2 bg-red-500 rounded-full text-white px-1 text-xs">
-          {cart} 
+          <span className="absolute top-2 left-3 bg-red-500 rounded-full text-white px-1 text-xs">
+          {cartItems.length}  
           </span>
         </div>
 
@@ -81,11 +85,11 @@ const Navbar = () => {
           </button>
         )}
         <CgProfile
-          className="text-white text-3xl cursor-pointer"
+          className="text-white text-3xl cursor-pointer mt-1"
           onClick={toggleProfile}
         />
       </div>
-      {showProfile && <Profile />}
+      {showProfile && <Profile  />}
     </nav>
   );
 };
