@@ -55,15 +55,17 @@ const Navbar = () => {
           onClick={() => navigate("/")}
         />
       </div>
-      <div className="flex space-x-4">
+      <div className="flex space-x-4 text-white">
         <div
           className="relative cursor-pointer"
           onClick={() => navigate("/cart")}
         >
-          <FontAwesomeIcon
+          
+        <p><FontAwesomeIcon
             icon={faShoppingCart}
-            className="text-white text-lg cursor-pointer mt-3"
-          />
+            className="text-white text-lg cursor-pointer mt-3 mr-2"
+          />Cart
+          </p>
           <span className="absolute top-2 left-3 bg-red-500 rounded-full text-white px-1 text-xs">
           {cartItems.length}  
           </span>

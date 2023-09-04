@@ -32,7 +32,7 @@ import AllCoupons from "./components/admin/AllCoupons";
 import UpdateCoupon from "./components/admin/UpdateCoupon";
 import ShowAllOrder from "./components/admin/ShowAllOrder";
 import ShowOrdersUser from "./widgets/ShowOrdersUser";
-import { CartProvider } from "./context/CartContext";
+// import { CartProvider } from "./context/CartContext";
 import store from "./utils/store";
 import { Provider } from "react-redux";
 

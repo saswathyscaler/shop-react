@@ -10,6 +10,5 @@ const store = configureStore({
         user:userSlice,
         product:productSlice,
     },
-
 });
 export default store;
