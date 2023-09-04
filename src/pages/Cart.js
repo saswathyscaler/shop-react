@@ -7,7 +7,7 @@ import { clearCart, removeItem } from "../utils/cartSlice";
 
 const Cart = () => {
   const cartItems = useSelector((store) => store.cart.items);
-  console.log(cartItems)
+  // console.log(cartItems)
   const dispatch = useDispatch();
 
   const [products, setProducts] = useState([]);
@@ -29,7 +29,7 @@ const Cart = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
-      console.log("Fetched cart items:", data);
+      // console.log("Fetched cart items:", data);
       setProducts(data);
     } catch (error) {
       console.error("Error fetching products:", error);
@@ -48,10 +48,15 @@ const Cart = () => {
   
       if (response.ok) {
         console.log(response)
+        dispatch(removeItem(productId));
+
         setProducts((prevProducts) =>
-        prevProducts.filter((product) => product.id !== productId)
+        prevProducts.filter((product) => product?.id !== productId)
         );
-        dispatch(removeItem(productId)); 
+        console.log(productId)
+        
+
+
       } else {
         console.error("Error removing product:", response.statusText);
       }

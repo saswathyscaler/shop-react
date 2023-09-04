@@ -6,24 +6,40 @@ import { Link } from "react-router-dom";
 import Filterbar from "../utils/Filterbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {  faSearch } from "@fortawesome/free-solid-svg-icons";
+import store from "../utils/store";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../utils/productSlice";
+import { setProducts } from "../utils/productSlice";
+
+
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 12;
 
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.product.items);
+  const isLoaded = useSelector((state) => state.product.isLoaded);
+console.log(isLoaded)
+
+  
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/products")
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data.products);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
+    if (!isLoaded) {
+      console.log("Api Call Made")
+      fetch("http://127.0.0.1:8000/api/products")
+        .then((response) => response.json())
+        .then((data) => {
+          dispatch(setProducts(data.products));
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
+  }, [dispatch, isLoaded]);
+
 
   const handleFilter = (filteredProducts) => {
     setFilteredProducts(filteredProducts);
