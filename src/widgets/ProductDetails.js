@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BsCartPlus, BsLightningFill } from "react-icons/bs";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Rating from "../utils/Rating";
+import Rating from "../widgets/Rating";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import {  useCart } from "../context/CartContext"
 

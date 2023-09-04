@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import ProductCard from "../utils/ProductCard";
+import ProductCard from "../widgets/ProductCard";
 import { Link } from "react-router-dom";
 import Filterbar from "../utils/Filterbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
