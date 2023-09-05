@@ -5,13 +5,11 @@ import ProductCard from "../widgets/ProductCard";
 import { Link } from "react-router-dom";
 import Filterbar from "../utils/Filterbar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {  faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import store from "../utils/store";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../utils/productSlice";
 import { setProducts } from "../utils/productSlice";
-
-
 
 const Home = () => {
   // const [products, setProducts] = useState([]);
@@ -22,13 +20,11 @@ const Home = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.product.items);
   const isLoaded = useSelector((state) => state.product.isLoaded);
-console.log(isLoaded)
-
-  
+  console.log(isLoaded);
 
   useEffect(() => {
     if (!isLoaded) {
-      console.log("Api Call Made")
+      console.log("Api Call Made");
       fetch("http://127.0.0.1:8000/api/products")
         .then((response) => response.json())
         .then((data) => {
@@ -39,7 +35,6 @@ console.log(isLoaded)
         });
     }
   }, [dispatch, isLoaded]);
-
 
   const handleFilter = (filteredProducts) => {
     setFilteredProducts(filteredProducts);
@@ -82,25 +77,21 @@ console.log(isLoaded)
   };
   return (
     <div>
-
-
-    <div className="relative flex justify-center">
-    <form className="absolute bottom-[1.08rem] ">
-      <input
-        type="text"
-        className="p-1 rounded border m-2"
-        value={search}
-        placeholder="search what you desire"
-        onChange={handleSearchChange}
-        name="searchInput"
-      />
-      <button type="submit" onClick={(e) => e.preventDefault()}>
-        <FontAwesomeIcon icon={faSearch} />
-      </button>
-    </form>
-  </div>
-  
-  
+      <div className="relative flex justify-center">
+        <form className="absolute bottom-[1.08rem] ">
+          <input
+            type="text"
+            className="p-1 rounded border m-2"
+            value={search}
+            placeholder="search what you desire"
+            onChange={handleSearchChange}
+            name="searchInput"
+          />
+          <button type="submit" onClick={(e) => e.preventDefault()}>
+            <FontAwesomeIcon icon={faSearch} />
+          </button>
+        </form>
+      </div>
 
       <Filterbar onFilter={handleFilter} />
       <div className="w-full mb-4">

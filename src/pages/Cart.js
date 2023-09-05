@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 
-import { clearCart, removeItem } from "../utils/cartSlice";
+import { addItem, clearCart, removeItem } from "../utils/cartSlice";
 
 const Cart = () => {
   const cartItems = useSelector((store) => store.cart.items);
@@ -22,6 +22,8 @@ const Cart = () => {
   useEffect(() => {
     fetchProducts();
   }, []);
+
+
   const fetchProducts = async () => {
     try {
       const response = await fetch(`http://localhost:8000/api/cart`, {
@@ -29,8 +31,12 @@ const Cart = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       const data = await response.json();
-      // console.log("Fetched cart items:", data);
+      dispatch(clearCart());
       setProducts(data);
+      console.log( "data is" ,data)
+      data.forEach((item) => {
+        dispatch(addItem(item)); 
+      });
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -38,25 +44,21 @@ const Cart = () => {
 
   const removeFromCart = async (productId, quantity) => {
     try {
-      const response = await fetch(
-        `http://localhost:8000/api/cart/${productId}`,
-        {
-          method: "DELETE",
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const response = await fetch(`http://localhost:8000/api/cart/${productId}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
   
       if (response.ok) {
-        console.log(response)
-        dispatch(removeItem(productId));
-
+       
         setProducts((prevProducts) =>
-        prevProducts.filter((product) => product?.id !== productId)
+          prevProducts.filter((product) => product?.id !== productId)
         );
-        console.log(productId)
-        
-
-
+        dispatch(removeItem(productId));
+        const cartData = JSON.parse(localStorage.getItem("cart")) || [];
+      const updatedCartData = cartData.filter((product) => product?.id !== productId);
+      localStorage.setItem("cart", JSON.stringify(updatedCartData));
+  
       } else {
         console.error("Error removing product:", response.statusText);
       }
@@ -64,6 +66,7 @@ const Cart = () => {
       console.error("Error removing product:", error);
     }
   };
+  
   
 
   const removeAll = () => {
@@ -75,8 +78,11 @@ const Cart = () => {
     })
       .then((response) => {
         if (response.ok) {
+          setProducts([])
           console.log("Cart cleared successfully");
           dispatch(clearCart());
+
+          localStorage.setItem("cart",[])
           
         } else {
           console.error("Error clearing cart:", response.statusText);

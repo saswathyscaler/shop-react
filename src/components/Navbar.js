@@ -5,11 +5,12 @@ import { faShoppingCart } from "@fortawesome/free-solid-svg-icons";
 import logo from "../assets/logo.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import Profile from "../pages/Profile";
-
+// import store from "../utils/store";
 // import {useCart} from "../context/CartContext"
 
+
 import { useSelector } from "react-redux";
-// import store from "../utils/store";
+
 
 
 const Navbar = () => {

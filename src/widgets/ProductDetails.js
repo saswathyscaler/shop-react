@@ -7,7 +7,6 @@ import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 // import {  useCart } from "../context/CartContext"
 import { addItem } from "../utils/cartSlice";
 import { useDispatch } from "react-redux";
-import { clearCart } from "../utils/cartSlice";
 
 const ProductDetails = () => {
   const { productId } = useParams();
@@ -41,11 +40,12 @@ const ProductDetails = () => {
           body: JSON.stringify(),
         }
       );
-      console.log(response);
+  
       if (response.ok) {
-        const data = await response.json();
+  
         dispatch(addItem(product));
 
+  
         toast.success(`Added "${product?.name}" to cart`, {
           autoClose: 1000,
         });
@@ -57,6 +57,7 @@ const ProductDetails = () => {
       console.error("Error adding to cart:", error);
     }
   };
+  
 
   const toggleHeart = () => {
     setIsHeartFilled((prevState) => !prevState);

@@ -11,7 +11,6 @@ const productSlice = createSlice({
     setProducts: (state, action) => {
       state.items = action.payload;
       state.isLoaded = true; 
-      console.log(action.payload)
     },
   },
 });
