@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import store from "../utils/store";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../utils/productSlice";
 import { setProducts } from "../utils/productSlice";
 
 const Home = () => {

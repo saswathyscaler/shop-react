@@ -7,9 +7,9 @@ export function useCart() {
 }
 
 export function CartProvider({ children }) { 
-  let cartFromLS=Number(localStorage.getItem('cartCart')) || 0
+  let cartFrom=Number(localStorage.getItem('cartCart')) || 0
 
-  const [cart, setCart] = useState(cartFromLS);
+  const [cart, setCart] = useState(cartFrom);
 
  
 
